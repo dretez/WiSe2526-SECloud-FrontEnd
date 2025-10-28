@@ -14,13 +14,18 @@
   <body>
     <header></header>
     <main>
-      <form onsubmit="redirect('https://1.1.1.1')">
-        <label for="url">URL:</label>
-        <input type="text" name="url" placeholder="one.one.one.one" />
-        <input type="submit" name="" value="submit" />
-      </form>
+      <div class="container">
+        <div>
+          <form id="urlInput">
+            <label for="url">URL:</label>
+            <input type="text" name="url" placeholder="one.one.one.one" />
+            <input type="submit" name="" value="submit" />
+          </form>
+        </div>
+        <div>Shortened URL appears here</div>
+      </div>
     </main>
     <footer></footer>
-    <script src="/js/redirect.js"></script>
+    <script src="/js/urlRequest.js"></script>
   </body>
 </html>
