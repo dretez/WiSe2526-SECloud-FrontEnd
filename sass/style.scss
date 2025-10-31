@@ -1,4 +1,6 @@
 @use "reset";
+@use "auth";
+@use "header";
 
 body {
   display: flex;
@@ -17,4 +19,8 @@ main {
   flex-direction: column;
   margin: auto;
   gap: 1rem;
+}
+
+.openAuthScreen {
+  cursor: pointer;
 }

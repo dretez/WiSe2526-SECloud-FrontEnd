@@ -12,7 +12,15 @@
     />
   </head>
   <body>
-    <header></header>
+    <header>
+      <div class="navbar">
+        <div class="left"></div>
+        <div class="center"></div>
+        <div class="right">
+          <div class="openAuthScreen">Login</div>
+        </div>
+      </div>
+    </header>
     <main>
       <div class="container">
         <div>
@@ -26,6 +34,24 @@
       </div>
     </main>
     <footer></footer>
+
+    <div id="authScreen" class="display">
+      <div class="authPane">
+        <form id="loginForm">
+          <div>
+            <label for="email">Email:</label>
+            <input type="email" name="email" />
+          </div>
+          <div>
+            <label for="password">Password:</label>
+            <input type="password" name="password" />
+          </div>
+        </form>
+        <div class="closePane">X</div>
+      </div>
+      <div class="bgShadow"></div>
+    </div>
+
     <script type="module" src="/js/index.js"></script>
   </body>
 </html>
