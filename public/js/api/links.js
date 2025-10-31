@@ -1,3 +1,5 @@
+"use strict";
+
 const create = (api, longUrl, alias = "") => {
   api.post(
     "/api/links",

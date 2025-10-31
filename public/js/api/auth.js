@@ -1,3 +1,5 @@
+"use strict";
+
 const register = (api, email, password) => {
   api.post(
     "/auth/register",

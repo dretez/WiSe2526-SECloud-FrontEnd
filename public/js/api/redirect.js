@@ -1,3 +1,5 @@
+"use strict";
+
 const to = (api, id) => {
   api.get(`/${id}`, { 404: "URL not found" }, async (response) => {
     let data = await response.json();

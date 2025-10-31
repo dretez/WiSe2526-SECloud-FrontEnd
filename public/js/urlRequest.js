@@ -1,3 +1,5 @@
+"use strict";
+
 let form = document.querySelector("#urlInput");
 let urlinput = form.querySelector("input[name=url]");
 

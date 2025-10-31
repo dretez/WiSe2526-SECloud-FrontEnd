@@ -1,3 +1,5 @@
+"use strict";
+
 import API from "./api.js";
 import * as api_auth from "./api/auth.js";
 import * as api_links from "./api/links.js";
