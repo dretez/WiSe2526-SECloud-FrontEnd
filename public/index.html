@@ -27,7 +27,7 @@
           <form id="urlInput">
             <label for="url">URL:</label>
             <input type="text" name="url" placeholder="one.one.one.one" />
-            <input type="submit" name="" value="submit" />
+            <input type="submit" name="urlsubmit" value="submit" />
           </form>
         </div>
         <div>Shortened URL appears here</div>
@@ -36,7 +36,12 @@
     <footer></footer>
 
     <div id="authScreen" class="display">
+      <div class="bgShadow"></div>
       <div class="authPane">
+        <div class="authMethodSelector">
+          <div class="authRegister">Register</div>
+          <div class="authLogin">Login</div>
+        </div>
         <form id="loginForm">
           <div>
             <label for="email">Email:</label>
@@ -46,10 +51,10 @@
             <label for="password">Password:</label>
             <input type="password" name="password" />
           </div>
+          <input type="submit" name="authenter" value="Enter" />
         </form>
         <div class="closePane">X</div>
       </div>
-      <div class="bgShadow"></div>
     </div>
 
     <script type="module" src="/js/index.js"></script>
