@@ -1,5 +1,8 @@
 "use strict";
 
+import { startSession, endSession } from "../auth/session.js";
+import { hideAuthScreen } from "../auth/auth.js";
+
 const register = (api, email, password) => {
   api.post(
     "/auth/register",
@@ -10,7 +13,11 @@ const register = (api, email, password) => {
       console.log(data);
       console.log(data.uid);
       console.log(data.email);
-      // set httponly session cookie
+      startSession();
+      hideAuthScreen();
+    },
+    (status) => {
+      // handle http error
     },
   );
 };
@@ -25,14 +32,18 @@ const login = (api, email, password) => {
       console.log(data);
       console.log(data.uid);
       console.log(data.email);
-      // set httponly session cookie
+      startSession();
+      hideAuthScreen();
+    },
+    (status) => {
+      // handle http error
     },
   );
 };
 
 const logout = (api) => {
   api.post("/auth/logout", {}, {}, () => {
-    // clear httponly session cookie
+    endSession();
   });
 };
 

@@ -86,6 +86,9 @@ header > .navbar {
 header > .navbar > .center {
   flex-grow: 1;
 }
+header > .navbar > * {
+  display: flex;
+}
 header > .navbar > * > * {
   padding: 0 0.5rem;
 }
@@ -111,6 +114,10 @@ main {
 
 .openAuthScreen {
   cursor: pointer;
+}
+
+.hide {
+  display: none;
 }
 
 /*# sourceMappingURL=style.css.map */

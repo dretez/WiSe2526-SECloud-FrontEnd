@@ -1,6 +1,7 @@
 "use strict";
 
 import * as api_auth from "../api/auth.js";
+import * as session from "./session.js";
 
 const authScreen = document.querySelector("#authScreen");
 const clseButtons = authScreen.querySelectorAll(".closePane");
@@ -73,6 +74,7 @@ function setAuthOpt(opt) {
 
 function setupAPICalls(apiObj) {
   api = apiObj;
+  session.setupAPICalls(apiObj);
 }
 
-export { setupAPICalls };
+export { setupAPICalls, hideAuthScreen, showAuthScreen };
