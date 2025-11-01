@@ -1,11 +1,12 @@
 "use strict";
 
-import API from "./api.js";
-import * as api_auth from "./api/auth.js";
+import API from "./api/api.js";
 import * as api_links from "./api/links.js";
 import * as api_redirect from "./api/redirect.js";
 
 const api = new API("our/api/here");
 
 import "./urlRequest.js";
-import "./authScreen.js";
+import * as auth from "./auth/authScreen.js";
+
+auth.setupAPICalls(api);
