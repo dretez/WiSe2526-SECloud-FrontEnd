@@ -8,7 +8,10 @@ class API {
   }
 
   get(path, statusDict, responseHandler, errorHandler) {
-    fetch(this.#url + path)
+    fetch(this.#url + path, {
+      method: "GET",
+      credentials: "include",
+    })
       .then((response) => {
         if (response.ok) return response;
         if (statusDict.hasOwnProperty(response.status))
@@ -36,6 +39,7 @@ class API {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
+      credentials: "include",
     })
       .then((response) => {
         if (response.ok) return response;
@@ -64,6 +68,7 @@ class API {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
+      credentials: "include",
     })
       .then((response) => {
         if (response.ok) return response;
