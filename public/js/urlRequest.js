@@ -4,6 +4,7 @@ import * as api_links from "./api/links.js";
 
 let form = document.querySelector("#urlInput");
 let urlinput = form.querySelector("input[name=url]");
+let shorturlDisplay = document.querySelector("#shortUrlContainer > .shortUrl");
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -13,7 +14,12 @@ form.addEventListener("submit", (e) => {
 async function urlRequest() {
   let url = urlinput.value.length == 0 ? urlinput.placeholder : urlinput.value;
   url = parseURL(url);
-  console.log(await api_links.create(api, url));
+  let api_output = await api_links.create(api, url);
+  console.log(api_output);
+  shorturlDisplay.textContent =
+    typeof api_output != "undefined"
+      ? api_output
+      : "There was an error getting your shortened url, please try again.";
 }
 
 const parseURL = (url) => {
