@@ -1,17 +1,20 @@
 "use strict";
 
-const create = (api, longUrl, alias = "") => {
-  api.post(
+const create = async (api, longUrl, alias = "") => {
+  let output;
+  await api.post(
     "/api/links",
     alias != "" ? { longUrl: longUrl, alias: alias } : { longUrl: longUrl },
     { 400: "Invalid URL or alias taken", 401: "Unauthorized access" },
     async (response) => {
       let data = await response.json();
+      output = { id: data.id, shortUrl: data.shortUrl };
       console.log(data);
       console.log(data.id);
       console.log(data.shortUrl);
     },
   );
+  return output;
 };
 
 const mine = (api) => {
