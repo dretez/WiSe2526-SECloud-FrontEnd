@@ -110,6 +110,8 @@ main {
   flex-direction: column;
   margin: auto;
   gap: 1rem;
+  max-width: 50rem;
+  width: 80vw;
 }
 
 .openAuthScreen {
@@ -118,6 +120,34 @@ main {
 
 .hide {
   display: none;
+}
+
+#urlInput {
+  max-width: fit-content;
+  margin: auto;
+}
+
+#shortUrlContainer {
+  display: flex;
+  max-width: 30rem;
+  width: 80%;
+  margin: auto;
+  padding: 0.5rem;
+  border: 0.125rem solid #000;
+  border-radius: 0.5rem;
+  color: #444;
+  gap: 1rem;
+}
+#shortUrlContainer > span {
+  flex-grow: 1;
+  align-content: center;
+  overflow: auto hidden;
+  white-space: nowrap;
+}
+#shortUrlContainer > img {
+  max-width: 2rem;
+  border: 0.06125rem solid #000;
+  border-radius: 0.5rem;
 }
 
 /*# sourceMappingURL=style.css.map */
