@@ -23,6 +23,7 @@ header > .navbar {
 }
 header > .navbar > .center {
   flex-grow: 1;
+  justify-content: center;
 }
 header > .navbar > * {
   display: flex;

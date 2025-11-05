@@ -5,7 +5,8 @@ header {
     border-bottom: 0.125rem solid #000;
 
     > .center {
-      flex-grow: 1
+      flex-grow: 1;
+      justify-content: center;
     }
 
     > * {
