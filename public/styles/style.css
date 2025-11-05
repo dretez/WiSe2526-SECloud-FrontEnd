@@ -3,6 +3,7 @@ ul,
 body {
   margin: 0;
   padding: 0;
+  font-weight: normal;
   font-family: sans-serif;
 }
 
@@ -15,24 +16,30 @@ li {
   list-style: none;
 }
 
+header > .navbar {
+  display: flex;
+  padding: 1rem 0.5rem;
+  border-bottom: 0.125rem solid #000;
+}
+header > .navbar > .center {
+  flex-grow: 1;
+}
+header > .navbar > * {
+  display: flex;
+}
+header > .navbar > * > * {
+  padding: 0 0.5rem;
+}
+
 #authScreen {
-  position: absolute;
-  width: 100vw;
-  height: 100vh;
   display: none;
 }
 #authScreen.display {
   display: flex;
 }
 #authScreen .authPane {
-  max-width: max-content;
-  margin: auto;
-  padding: 2rem;
-  background-color: #fff;
-  z-index: 1;
-  position: relative;
-  display: flex;
   flex-direction: column;
+  display: flex;
   gap: 1rem;
 }
 #authScreen .authPane .authMethodSelector {
@@ -50,20 +57,6 @@ li {
 #authScreen .authPane .authMethodSelector > *.selected {
   background-color: #888;
 }
-#authScreen .authPane .closePane {
-  position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
-  cursor: pointer;
-  user-select: none;
-  -webkit-user-select: none;
-}
-#authScreen .bgShadow {
-  height: inherit;
-  width: inherit;
-  background-color: rgba(0, 0, 0, 0.7529411765);
-  position: absolute;
-}
 
 #loginForm {
   display: flex;
@@ -78,19 +71,37 @@ li {
   flex-grow: 1;
 }
 
-header > .navbar {
-  display: flex;
-  padding: 1rem 0.5rem;
-  border-bottom: 0.125rem solid #000;
+#my-dashboard {
+  display: none;
 }
-header > .navbar > .center {
-  flex-grow: 1;
-}
-header > .navbar > * {
+#my-dashboard.display {
   display: flex;
 }
-header > .navbar > * > * {
-  padding: 0 0.5rem;
+#my-dashboard > .pane {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+#my-dashboard > .pane > table {
+  border-spacing: 1rem;
+}
+#my-dashboard > .pane > ul.link-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+#my-dashboard > .pane > ul.link-list > li {
+  display: flex;
+  gap: 1rem;
+  padding: 0.5rem;
+  border: 0.06125rem solid #000;
+  border-radius: 0.5rem;
+}
+#my-dashboard > .pane > ul.link-list > li:not(.big) > * {
+  display: none;
+}
+#my-dashboard > .pane > ul.link-list > li:not(.big) > *.longUrl {
+  display: initial;
 }
 
 body {
@@ -149,6 +160,34 @@ main {
   border: 0.06125rem solid #000;
   border-radius: 0.5rem;
   cursor: pointer;
+}
+
+.floating {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+}
+.floating .bgShadow {
+  height: inherit;
+  width: inherit;
+  background-color: rgba(0, 0, 0, 0.7529411765);
+  position: absolute;
+}
+.floating .pane {
+  margin: auto;
+  max-width: max-content;
+  position: relative;
+  padding: 2rem;
+  background-color: #fff;
+  z-index: 1;
+}
+.floating .pane .closePane {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 /*# sourceMappingURL=style.css.map */

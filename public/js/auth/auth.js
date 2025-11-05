@@ -4,7 +4,7 @@ import * as api_auth from "../api/auth.js";
 import * as session from "./session.js";
 
 const authScreen = document.querySelector("#authScreen");
-const clseButtons = authScreen.querySelectorAll(".closePane");
+// const clseButtons = authScreen.querySelectorAll(".closePane");
 const openButtons = document.querySelectorAll(".openAuthScreen");
 const authEnterBtn = authScreen.querySelector("input[name=authenter]");
 const loginForm = authScreen.querySelector("#loginForm");
@@ -28,7 +28,7 @@ setAuthOpt(selectedAuthOpt);
 
 /*============================= EVENT LISTENERS =============================*/
 
-clseButtons.forEach((e) => e.addEventListener("click", () => hideAuthScreen()));
+// clseButtons.forEach((e) => e.addEventListener("click", () => hideAuthScreen()));
 openButtons.forEach((e) => e.addEventListener("click", () => showAuthScreen()));
 
 Object.entries(authOpts).forEach(([key, val]) => {
