@@ -28,7 +28,6 @@ setAuthOpt(selectedAuthOpt);
 
 /*============================= EVENT LISTENERS =============================*/
 
-// clseButtons.forEach((e) => e.addEventListener("click", () => hideAuthScreen()));
 openButtons.forEach((e) => e.addEventListener("click", () => showAuthScreen()));
 
 Object.entries(authOpts).forEach(([key, val]) => {
@@ -44,12 +43,6 @@ loginForm.addEventListener("submit", (e) => {
     api_auth[selectedAuthOpt](api, email, password);
   } else {
     console.error("Error: No API specified to be used for authentication");
-  }
-});
-
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape" && authScreen.classList.contains("display")) {
-    hideAuthScreen();
   }
 });
 
