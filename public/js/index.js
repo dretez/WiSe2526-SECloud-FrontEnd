@@ -6,12 +6,13 @@ const api = new API("our/api/here");
 
 import * as url from "./urlRequest.js";
 import * as auth from "./auth/auth.js";
-import * as dashboard from "./dashboard/dashboard.js";
+import { Dashboard } from "./dashboard/dashboard.js";
 import * as redirect from "./redirect.js";
+
+new Dashboard(api);
 
 auth.setupAPICalls(api);
 url.setupAPICalls(api);
-dashboard.setupAPICalls(api);
 redirect.setupAPICalls(api);
 
 document.querySelectorAll(".floating").forEach((pane) => {

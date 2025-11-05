@@ -17,13 +17,15 @@ const create = async (api, longUrl, alias = "") => {
   return output;
 };
 
-const mine = (api) => {
+const mine = async (api) => {
+  let output = [];
   api.get(
     "/api/links/mine",
     { 401: "Unauthorized access" },
     async (response) => {
       let mylinks = await response.json();
       mylinks.forEach((link) => {
+        output.push(link);
         console.log(link);
         console.log(link.id);
         console.log(link.longUrl);
@@ -33,10 +35,14 @@ const mine = (api) => {
         if ("createdAt" in link) console.log(link.createdAt);
       });
     },
+    (status) => {
+      throw new Error(status);
+    },
   );
+  return output;
 };
 
-const meta = (api, id) => {
+const meta = async (api, id) => {
   api.get(
     `/api/links/${id}/meta`,
     { 401: "Unauthorized access", 403: "Not owner", 404: "Not found" },
@@ -47,8 +53,8 @@ const meta = (api, id) => {
   );
 };
 
-const toggle = (api, id, isActive) => {
-  api.patch(
+const toggle = async (api, id, isActive) => {
+  await api.patch(
     `/api/links/${id}`,
     { isActive: isActive },
     {
@@ -58,6 +64,9 @@ const toggle = (api, id, isActive) => {
       404: "Not found",
     },
     () => {}, // nothing to handle
+    (status) => {
+      throw new Error(status);
+    },
   );
 };
 

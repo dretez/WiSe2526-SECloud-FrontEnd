@@ -1,15 +1,15 @@
 "use strict";
 
+import * as api_links from "../api/links.js";
+
 class LinkComponent {
+  #displayToggled;
   #id;
-  #longUrl;
-  #hitCount;
-  #lastHit;
-  #createdAt;
   #isActive;
-  #toggled;
+  #api;
 
   constructor(
+    api,
     id,
     longUrl,
     hitCount,
@@ -18,13 +18,10 @@ class LinkComponent {
     isActive,
     toggled = false,
   ) {
+    this.#api = api;
     this.#id = id;
-    this.#longUrl = longUrl;
-    this.#hitCount = hitCount;
-    this.#lastHit = lastHit;
-    this.#createdAt = createdAt;
     this.#isActive = isActive;
-    this.#toggled = toggled;
+    this.#displayToggled = toggled;
 
     this.element = document.createElement("li");
     this.element.innerHTML = `
@@ -38,15 +35,26 @@ class LinkComponent {
 </div>
     `;
 
-    this.element.classList[this.#toggled ? "add" : "remove"]("big");
+    this.element.classList[this.#displayToggled ? "add" : "remove"]("big");
     this.element.addEventListener("click", () => {
-      this.#toggled = !this.#toggled;
-      this.element.classList[this.#toggled ? "add" : "remove"]("big");
+      this.#displayToggled = !this.#displayToggled;
+      this.element.classList[this.#displayToggled ? "add" : "remove"]("big");
     });
 
     this.element.querySelector("input").addEventListener("click", (e) => {
       e.stopPropagation();
     });
+  }
+
+  async commit() {
+    const activeToggle = this.element.querySelector(
+      "input[name=activeLinkToggle",
+    );
+    if (activeToggle.checked === this.#isActive) return;
+    try {
+      await api_links.toggle(this.#api, this.#id, activeToggle.checked);
+      this.#isActive = activeToggle.checked;
+    } catch (error) {}
   }
 }
 
