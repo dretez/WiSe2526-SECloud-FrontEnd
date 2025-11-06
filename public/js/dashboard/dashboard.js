@@ -28,7 +28,12 @@ class Dashboard {
     this.#api = api;
     this.#links = [];
     applyChangesBtn.addEventListener("click", () => this.commit());
-    this.load();
+
+    openButtons.forEach((e) =>
+      e.addEventListener("click", () => {
+        this.load();
+      }),
+    );
   }
 
   async load() {

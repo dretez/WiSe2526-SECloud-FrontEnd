@@ -4,7 +4,6 @@ import * as api_auth from "../api/auth.js";
 import * as session from "./session.js";
 
 const authScreen = document.querySelector("#authScreen");
-// const clseButtons = authScreen.querySelectorAll(".closePane");
 const openButtons = document.querySelectorAll(".openAuthScreen");
 const authEnterBtn = authScreen.querySelector("input[name=authenter]");
 const loginForm = authScreen.querySelector("#loginForm");
