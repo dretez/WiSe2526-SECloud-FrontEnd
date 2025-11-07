@@ -1,6 +1,7 @@
 "use strict";
 
 import * as api_links from "../api/links.js";
+import { session } from "../auth/session.js";
 
 import { LinkComponent } from "./linkComponent.js";
 
@@ -11,13 +12,14 @@ const applyChangesBtn = dashboard.querySelector("button[name=applyChanges]");
 
 openButtons.forEach((e) =>
   e.addEventListener("click", () => {
+    if (!session) return;
     dashboard.classList.add("display");
   }),
 );
 
 const testLinks = (api) => [
   new LinkComponent(api, 123, "https://one.one.one.one/", 23, "-", "-", false),
-  new LinkComponent(api, 123, "https://one.one.one.one/", 23, "-", "-", true),
+  new LinkComponent(api, 456, "https://www.google.com/", 157, "-", "-", true),
 ];
 
 class Dashboard {
@@ -31,6 +33,7 @@ class Dashboard {
 
     openButtons.forEach((e) =>
       e.addEventListener("click", () => {
+        if (!session) return;
         this.load();
       }),
     );

@@ -26,10 +26,10 @@ class LinkComponent {
     this.element = document.createElement("li");
     this.element.innerHTML = `
 <div class="longUrl">${longUrl}</div>
-<div class="id">${id}</div>
-<div class="hitCount">${hitCount}</div>
-<div class="lastHitAt">${typeof lastHit == "undefined" ? "-" : lastHit}</div>
-<div class="createdAt">${typeof createdAt == "undefined" ? "-" : createdAt}</div>
+<div class="id">Id: ${id}</div>
+<div class="hitCount">Hit count: ${hitCount}</div>
+<div class="lastHitAt">Last hit: ${typeof lastHit == "undefined" ? "-" : lastHit}</div>
+<div class="createdAt">Created: ${typeof createdAt == "undefined" ? "-" : createdAt}</div>
 <div class="isActive">
   <input type="checkbox" name="activeLinkToggle" value=""${isActive ? " checked" : ""}/>
 </div>
