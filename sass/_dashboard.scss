@@ -1,39 +1,338 @@
+// Modern Dashboard with card-based design
 #my-dashboard {
   display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.3s ease;
 
   &.display {
     display: flex;
   }
 
-  > .pane {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+  .bgShadow {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+  }
 
-    > table {
-      border-spacing: 1rem;
+  > .pane {
+    position: relative;
+    background: white;
+    border-radius: 20px;
+    padding: 2.5rem;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    max-width: 900px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    z-index: 1;
+    animation: slideUp 0.3s ease;
+
+    > span {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 1.5rem;
+      display: block;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    > .profileSection {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.5rem;
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+      border-radius: 16px;
+      margin-bottom: 2rem;
+
+      > .profileImage {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 4px solid white;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        transition: transform 0.2s ease;
+
+        &:hover {
+          transform: scale(1.05);
+        }
+      }
+
+      > .profileUpload {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1.5rem;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.2s ease;
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+
+        &:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+        }
+
+        > input {
+          display: none;
+        }
+
+        > span {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+
+          &::before {
+            content: "📷";
+            font-size: 1.2rem;
+          }
+        }
+      }
+
+      > .profileImageStatus {
+        font-size: 0.9rem;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        font-weight: 500;
+        text-align: center;
+        min-height: 1.5rem;
+        transition: all 0.2s ease;
+
+        &:not(.hide) {
+          background: rgba(102, 126, 234, 0.1);
+          color: #667eea;
+        }
+      }
     }
 
     > ul.link-list {
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
 
       > li {
-        display: flex;
-        gap: 1rem;
-        padding: 0.5rem;
-        border: 0.06125rem solid #000;
-        border-radius: 0.5rem;
+        background: white;
+        border: 2px solid #e8e8e8;
+        border-radius: 12px;
+        padding: 1.25rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        position: relative;
+        overflow: hidden;
 
-        &:not(.big) > * {
-          display: none;
+        &::before {
+          content: "";
+          position: absolute;
+          left: 0;
+          top: 0;
+          bottom: 0;
+          width: 4px;
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          transform: scaleY(0);
+          transition: transform 0.2s ease;
+        }
 
-          &.longUrl {
-            display: initial;
+        &:hover {
+          border-color: #667eea;
+          box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+          transform: translateY(-2px);
+
+          &::before {
+            transform: scaleY(1);
+          }
+        }
+
+        &.big {
+          border-color: #667eea;
+          box-shadow: 0 8px 24px rgba(102, 126, 234, 0.2);
+
+          &::before {
+            transform: scaleY(1);
+          }
+
+          > * {
+            display: block !important;
+            margin-bottom: 0.75rem;
+
+            &:last-child {
+              margin-bottom: 0;
+            }
+          }
+        }
+
+        &:not(.big) {
+          > * {
+            display: none;
+
+            &.longUrl,
+            &.shortUrl {
+              display: block;
+            }
+          }
+        }
+
+        > .longUrl {
+          font-weight: 600;
+          color: #333;
+          font-size: 1rem;
+          word-break: break-all;
+          margin-bottom: 0.5rem;
+        }
+
+        > .shortUrl {
+          color: #667eea;
+          font-weight: 500;
+          font-size: 0.95rem;
+
+          > a {
+            color: #667eea;
+            text-decoration: underline;
+            transition: color 0.2s ease;
+
+            &:hover {
+              color: #764ba2;
+            }
+          }
+        }
+
+        > .id,
+        > .hitCount,
+        > .lastHitAt,
+        > .createdAt {
+          font-size: 0.9rem;
+          color: #666;
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+
+          &::before {
+            font-size: 0.8rem;
+            opacity: 0.6;
+          }
+        }
+
+        > .id::before {
+          content: "🆔";
+        }
+
+        > .hitCount::before {
+          content: "👆";
+        }
+
+        > .lastHitAt::before {
+          content: "🕐";
+        }
+
+        > .createdAt::before {
+          content: "📅";
+        }
+
+        > .isActive {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          margin-top: 0.5rem;
+
+          > input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: #667eea;
+          }
+
+          &::before {
+            content: "Status:";
+            font-size: 0.9rem;
+            color: #666;
+            font-weight: 500;
           }
         }
       }
+    }
+
+    > button[name="applyChanges"] {
+      padding: 0.875rem 2rem;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+      width: 100%;
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+    }
+
+    .closePane {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: #f5f5f5;
+      cursor: pointer;
+      font-size: 1.3rem;
+      color: #666;
+      transition: all 0.2s ease;
+      user-select: none;
+
+      &:hover {
+        background: #e8e8e8;
+        transform: rotate(90deg);
+      }
+    }
+  }
+}
+
+// Scrollbar styling for dashboard
+#my-dashboard > .pane {
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 10px;
+
+    &:hover {
+      background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
     }
   }
 }

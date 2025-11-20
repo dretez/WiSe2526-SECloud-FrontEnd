@@ -3,9 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <meta name="api-base-url" content="http://localhost:8080" />
+    <title>URL Shortener - Shorten Your Links Instantly</title>
     <link
-      href="/styles/style.css"
+      href="/styles/style.css?v=2.0"
       rel="stylesheet"
       type="text/css"
       media="all"
@@ -16,9 +17,11 @@
       <div class="navbar">
         <div class="left">
           <div class="openDashboard">Dashboard</div>
+          <a href="/testing.html" style="padding: 0 0.5rem;">Testing</a>
         </div>
         <div class="center"></div>
         <div class="right">
+          <img class="profileImage hide" alt="Profile picture" />
           <div class="login openAuthScreen">Login</div>
           <div class="logout hide">Logout</div>
         </div>
@@ -26,16 +29,20 @@
     </header>
     <main>
       <div class="container">
-        <div>
-          <form id="urlInput">
-            <label for="url">URL:</label>
-            <input type="text" name="url" placeholder="one.one.one.one" />
-            <input type="submit" name="urlsubmit" value="submit" />
-          </form>
+        <div style="text-align: center; margin-bottom: 1rem;">
+          <h1 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+            🔗 URL Shortener
+          </h1>
+          <p style="color: #666; font-size: 1.1rem;">Shorten your long URLs instantly</p>
         </div>
+        <form id="urlInput">
+          <label for="url">Enter your URL:</label>
+          <input type="text" name="url" placeholder="https://example.com/very/long/url" />
+          <input type="submit" name="urlsubmit" value="Shorten URL" />
+        </form>
         <div id="shortUrlContainer">
-          <span class="shortUrl"> Shortened URL appears here </span>
-          <img src="/assets/copy.svg" alt="Copy short url" />
+          <span class="shortUrl"></span>
+          <img src="/assets/copy.svg" alt="Copy short url" title="Copy to clipboard" />
         </div>
       </div>
     </main>
@@ -43,38 +50,67 @@
 
     <div id="authScreen" class="floating">
       <div class="bgShadow"></div>
-      <div class="authPane pane">
+      <div class="authPane">
         <div class="authMethodSelector">
-          <div class="authRegister">Register</div>
-          <div class="authLogin">Login</div>
+          <div class="authRegister">✨ Register</div>
+          <div class="authLogin">🔐 Login</div>
         </div>
         <form id="loginForm">
           <div>
-            <label for="email">Email:</label>
-            <input type="email" name="email" />
+            <label for="email">Email</label>
+            <input type="email" name="email" placeholder="Enter your email" />
           </div>
           <div>
-            <label for="password">Password:</label>
-            <input type="password" name="password" />
+            <label for="password">Password</label>
+            <input type="password" name="password" placeholder="Enter your password" />
           </div>
-          <input type="submit" name="authenter" value="Enter" />
+          <input type="submit" name="authenter" value="Continue" />
         </form>
-        <div class="closePane">X</div>
+        <div class="authError hide"></div>
+        <div class="closePane" title="Close">✕</div>
       </div>
     </div>
 
     <div id="my-dashboard" class="floating">
       <div class="bgShadow"></div>
       <div class="pane">
-        <span>My dashboard</span>
+        <span>My Dashboard</span>
+        <div class="profileSection">
+          <img class="profileImage hide" alt="Profile picture" />
+          <label class="profileUpload">
+            <input type="file" name="profileImage" accept="image/png, image/jpeg, image/webp" />
+            <span>📷 Update Profile Picture</span>
+          </label>
+          <div class="profileImageStatus hide"></div>
+        </div>
         <ul class="link-list"></ul>
         <div>
           <button type="button" name="applyChanges">Apply Changes</button>
         </div>
-        <div class="closePane">X</div>
+        <div class="closePane" title="Close">✕</div>
       </div>
     </div>
 
+    <!-- Firebase SDK (for analytics and future client-side features) -->
+    <script type="module">
+      // Import Firebase from CDN
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
+      
+      // Import Firebase config
+      import { firebaseConfig } from "/js/config/firebase.js";
+      
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+      
+      // Make available globally if needed
+      window.firebaseApp = app;
+      window.firebaseAnalytics = analytics;
+      
+      console.log("Firebase initialized");
+    </script>
+    
     <script type="module" src="/js/index.js"></script>
   </body>
 </html>

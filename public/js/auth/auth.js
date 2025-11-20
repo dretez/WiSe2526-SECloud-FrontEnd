@@ -9,6 +9,7 @@ const authEnterBtn = authScreen.querySelector("input[name=authenter]");
 const loginForm = authScreen.querySelector("#loginForm");
 const emailInput = loginForm.querySelector("input[name=email]");
 const passwordInput = loginForm.querySelector("input[name=password]");
+const authErrorDisplay = authScreen.querySelector(".authError");
 
 const authOpts = {
   login: [...authScreen.querySelectorAll(".authMethodSelector > .authLogin")],
@@ -33,15 +34,27 @@ Object.entries(authOpts).forEach(([key, val]) => {
   val.forEach((e) => e.addEventListener("click", () => setAuthOpt(key)));
 });
 
-loginForm.addEventListener("submit", (e) => {
+loginForm.addEventListener("submit", async (e) => {
   e.preventDefault();
-  let email = emailInput.value;
+  setAuthError("");
+  authEnterBtn.disabled = true;
+  let email = emailInput.value.trim();
   let password = passwordInput.value;
 
   if (typeof api !== "undefined") {
-    api_auth[selectedAuthOpt](api, email, password);
+    try {
+      await api_auth[selectedAuthOpt](api, email, password);
+      passwordInput.value = "";
+    } catch (error) {
+      const message =
+        error?.message ?? (selectedAuthOpt === "login" ? "Login failed" : "Registration failed");
+      setAuthError(message);
+    } finally {
+      authEnterBtn.disabled = false;
+    }
   } else {
     console.error("Error: No API specified to be used for authentication");
+    authEnterBtn.disabled = false;
   }
 });
 
@@ -60,6 +73,17 @@ function setAuthOpt(opt) {
   Object.entries(authOpts).forEach(([key, val]) => {
     val.forEach((e) => e.classList[key === opt ? "add" : "remove"]("selected"));
   });
+}
+
+function setAuthError(message) {
+  if (!authErrorDisplay) return;
+  if (message && message.length > 0) {
+    authErrorDisplay.textContent = message;
+    authErrorDisplay.classList.remove("hide");
+  } else {
+    authErrorDisplay.textContent = "";
+    authErrorDisplay.classList.add("hide");
+  }
 }
 
 /*=================================== API ===================================*/

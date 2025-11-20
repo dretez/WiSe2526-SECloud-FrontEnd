@@ -1,50 +1,84 @@
 "use strict";
 
-import { startSession, endSession } from "../auth/session.js";
+import {
+  startSession,
+  endSession,
+  updateProfileImage,
+} from "../auth/session.js";
 import { hideAuthScreen } from "../auth/auth.js";
 
-const register = (api, email, password) => {
-  api.post(
+const register = async (api, email, password) => {
+  const data = await api.post(
     "/auth/register",
     { email: email, password: password },
     { 400: "Registration failed" },
     async (response) => {
-      let data = await response.json();
-      console.log(data);
-      console.log(data.uid);
-      console.log(data.email);
-      startSession();
-      hideAuthScreen();
+      return await response.json();
     },
     (status) => {
-      // handle http error
+      throw new Error(status);
     },
   );
+  startSession(data);
+  hideAuthScreen();
+  return data;
 };
 
-const login = (api, email, password) => {
-  api.post(
+const login = async (api, email, password) => {
+  const data = await api.post(
     "/auth/login",
     { email: email, password: password },
     { 401: "Invalid credentials" },
     async (response) => {
-      let data = await response.json();
-      console.log(data);
-      console.log(data.uid);
-      console.log(data.email);
-      startSession();
-      hideAuthScreen();
+      return await response.json();
     },
     (status) => {
-      // handle http error
+      throw new Error(status);
     },
   );
+  startSession(data);
+  hideAuthScreen();
+  return data;
 };
 
-const logout = (api) => {
-  api.post("/auth/logout", {}, {}, () => {
+const logout = async (api) => {
+  await api.post("/auth/logout", {}, {}, () => {});
     endSession();
-  });
 };
 
-export { register, login, logout };
+const me = async (api) => {
+  try {
+    const data = await api.get(
+      "/auth/me",
+      { 401: "Unauthorized" },
+      async (response) => {
+        return await response.json();
+      },
+    );
+    return data;
+  } catch (error) {
+    return undefined;
+  }
+};
+
+const uploadProfileImage = async (api, file) => {
+  const formData = new FormData();
+  formData.append("profileImage", file);
+
+  const data = await api.upload(
+    "/auth/profile-image",
+    formData,
+    { 400: "Invalid upload", 401: "Unauthorized" },
+    async (response) => {
+      return await response.json();
+    },
+  );
+
+  if (data?.downloadUrl) {
+    updateProfileImage(data.downloadUrl);
+  }
+
+  return data;
+};
+
+export { register, login, logout, me, uploadProfileImage };

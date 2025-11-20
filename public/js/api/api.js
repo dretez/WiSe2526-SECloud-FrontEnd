@@ -4,95 +4,91 @@ class API {
   #url;
 
   constructor(url) {
-    this.#url = url;
+    this.#url = (url ?? "").replace(/\/$/, "");
+  }
+
+  get baseUrl() {
+    return this.#url;
+  }
+
+  async #request(path, init, statusDict = {}, responseHandler, errorHandler) {
+    try {
+      const response = await fetch(this.#url + path, {
+        credentials: "include",
+        ...init,
+      });
+
+      if (!response.ok) {
+        const message = Object.prototype.hasOwnProperty.call(statusDict, response.status)
+          ? statusDict[response.status]
+          : `Unexpected HTTP status: ${response.status}`;
+        const error = new Error(message);
+        error.status = response.status;
+        throw error;
+      }
+
+      if (typeof responseHandler === "function") {
+        return await responseHandler(response);
+      }
+      return undefined;
+    } catch (error) {
+      console.error("API error:", error.message ?? error);
+      if (typeof errorHandler === "function") {
+        await errorHandler(error.status);
+      }
+      throw error;
+    }
   }
 
   async get(path, statusDict, responseHandler, errorHandler) {
-    await fetch(this.#url + path, {
-      method: "GET",
-      credentials: "include",
-    })
-      .then((response) => {
-        if (response.ok) return response;
-        if (statusDict.hasOwnProperty(response.status))
-          throw {
-            message: statusDict[response.status],
-            status: response.status,
-          };
-        else
-          throw {
-            message: `Unexpected HTTP status: ${response.status}`,
-            status: response.status,
-          };
-      })
-      .then(async (response) => {
-        await responseHandler(response);
-      })
-      .catch(async (error) => {
-        console.error("Error: " + error.message);
-        if (typeof errorHandler !== "undefined")
-          await errorHandler(error.status);
-      });
+    return await this.#request(
+      path,
+      { method: "GET" },
+      statusDict,
+      responseHandler,
+      errorHandler,
+    );
   }
 
   async post(path, data, statusDict, responseHandler, errorHandler) {
-    await fetch(this.#url + path, {
+    return await this.#request(
+      path,
+      {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
-      credentials: "include",
-    })
-      .then((response) => {
-        if (response.ok) return response;
-        if (statusDict.hasOwnProperty(response.status))
-          throw {
-            message: statusDict[response.status],
-            status: response.status,
-          };
-        else
-          throw {
-            message: `Unexpected HTTP status: ${response.status}`,
-            status: response.status,
-          };
-      })
-      .then(async (response) => {
-        await responseHandler(response);
-      })
-      .catch(async (error) => {
-        console.error("Error: " + error.message);
-        if (typeof errorHandler !== "undefined")
-          await errorHandler(error.status);
-      });
+      },
+      statusDict,
+      responseHandler,
+      errorHandler,
+    );
   }
 
   async patch(path, data, statusDict, responseHandler, errorHandler) {
-    await fetch(this.#url + path, {
+    return await this.#request(
+      path,
+      {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
-      credentials: "include",
-    })
-      .then((response) => {
-        if (response.ok) return response;
-        if (statusDict.hasOwnProperty(response.status))
-          throw {
-            message: statusDict[response.status],
-            status: response.status,
-          };
-        else
-          throw {
-            message: `Unexpected HTTP status: ${response.status}`,
-            status: response.status,
-          };
-      })
-      .then((response) => {
-        responseHandler(response);
-      })
-      .catch(async (error) => {
-        console.error("Error: " + error.message);
-        if (typeof errorHandler !== "undefined")
-          await errorHandler(error.status);
-      });
+      },
+      statusDict,
+      responseHandler,
+      errorHandler,
+    );
+  }
+
+  async upload(path, formData, statusDict, responseHandler, errorHandler) {
+    return await this.#request(
+      path,
+      {
+        method: "POST",
+        body: formData,
+      },
+      statusDict,
+      responseHandler,
+      errorHandler,
+    );
   }
 }
 

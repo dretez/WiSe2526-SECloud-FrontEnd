@@ -8,6 +8,7 @@ let shortUrlContainer = document.querySelector("#shortUrlContainer");
 let shorturlDisplay = shortUrlContainer.querySelector(".shortUrl");
 let copybtn = shortUrlContainer.querySelector("img");
 let shortUrlDefined = false;
+let lastShortUrl = "";
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -17,12 +18,40 @@ form.addEventListener("submit", (e) => {
 async function urlRequest() {
   let url = urlinput.value.length == 0 ? urlinput.placeholder : urlinput.value;
   url = parseURL(url);
-  let api_output = await api_links.create(api, url);
-  console.log(api_output);
-  shortUrlDefined = typeof api_output != "undefined";
-  shorturlDisplay.textContent = shortUrlDefined
-    ? api_output
-    : "There was an error getting your shortened url, please try again.";
+  
+  // Show loading state
+  const submitBtn = form.querySelector('input[type="submit"]');
+  const originalValue = submitBtn.value;
+  submitBtn.disabled = true;
+  submitBtn.value = "Shortening...";
+  shorturlDisplay.textContent = "⏳ Creating short URL...";
+  shortUrlDefined = false;
+  
+  try {
+    let api_output = await api_links.create(api, url);
+    shortUrlDefined = typeof api_output != "undefined" && typeof api_output.shortUrl === "string";
+    if (shortUrlDefined) {
+      lastShortUrl = api_output.shortUrl;
+      shorturlDisplay.textContent = api_output.shortUrl;
+      shortUrlContainer.style.borderColor = "rgba(40, 167, 69, 0.5)";
+      // Reset border color after 2 seconds
+      setTimeout(() => {
+        shortUrlContainer.style.borderColor = "rgba(102, 126, 234, 0.2)";
+      }, 2000);
+    } else {
+      shorturlDisplay.textContent = "❌ Error: Could not create short URL. Please try again.";
+      shortUrlContainer.style.borderColor = "rgba(220, 53, 69, 0.5)";
+    }
+  } catch (error) {
+    shortUrlDefined = false;
+    const errorMsg = error?.message || "Unknown error";
+    shorturlDisplay.textContent = `❌ Error: ${errorMsg}`;
+    shortUrlContainer.style.borderColor = "rgba(220, 53, 69, 0.5)";
+    console.error("URL shortening error:", error);
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.value = originalValue;
+  }
 }
 
 const copyToClipboard = async (text) => {
@@ -39,7 +68,20 @@ const parseURL = (url) => {
 let api;
 copybtn.addEventListener("click", async () => {
   if (!shortUrlDefined) return;
-  await copyToClipboard(shorturlDisplay.textContent);
+  try {
+    await copyToClipboard(lastShortUrl);
+    // Visual feedback
+    const originalSrc = copybtn.src;
+    copybtn.style.transform = "scale(1.2)";
+    copybtn.style.filter = "brightness(1.2)";
+    setTimeout(() => {
+      copybtn.style.transform = "scale(1)";
+      copybtn.style.filter = "brightness(1)";
+    }, 200);
+  } catch (error) {
+    console.error("Failed to copy:", error);
+    alert("Failed to copy to clipboard. Please copy manually.");
+  }
 });
 
 function setupAPICalls(apiObj) {

@@ -3,6 +3,7 @@
 @use "auth";
 @use "dashboard";
 
+// Main container styles
 body {
   display: flex;
   flex-direction: column;
@@ -13,84 +14,266 @@ main {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
+  padding: 3rem 1rem;
 }
 
 .container {
   display: flex;
   flex-direction: column;
   margin: auto;
-  gap: 1rem;
-  max-width: 50rem;
-  width: 80vw;
+  gap: 2rem;
+  max-width: 800px;
+  width: 100%;
+  background: white;
+  padding: 3rem;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+  animation: slideUp 0.5s ease;
 }
 
 .openDashboard,
 .openAuthScreen {
   cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 .hide {
-  display: none;
+  display: none !important;
 }
 
+// URL Input Form - Modern Design
 #urlInput {
-  max-width: fit-content;
-  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+
+  > label {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0.5rem;
+  }
+
+  > input[type="text"] {
+    padding: 1rem 1.25rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    background: #fafafa;
+    width: 100%;
+
+    &:focus {
+      border-color: #667eea;
+      background: white;
+      box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+    }
+
+    &::placeholder {
+      color: #999;
+    }
+  }
+
+  > input[type="submit"] {
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    width: 100%;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
 }
 
+// Short URL Container - Modern Card Design
 #shortUrlContainer {
   display: flex;
-  max-width: 30rem;
-  width: 80%;
-  margin: auto;
-  padding: 0.5rem;
-  border: 0.125rem solid #000;
-  border-radius: 0.5rem;
-  color: #444;
+  align-items: center;
   gap: 1rem;
+  padding: 1.25rem 1.5rem;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+  border: 2px solid rgba(102, 126, 234, 0.2);
+  border-radius: 12px;
+  transition: all 0.2s ease;
+
+  &:hover {
+    border-color: rgba(102, 126, 234, 0.4);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+  }
 
   > span {
     flex-grow: 1;
-    align-content: center;
-    overflow: auto hidden;
-    white-space: nowrap;
+    font-size: 1rem;
+    color: #333;
+    word-break: break-all;
+    font-weight: 500;
+
+    &:empty::before {
+      content: "Shortened URL will appear here...";
+      color: #999;
+      font-style: italic;
+    }
   }
 
   > img {
-    max-width: 2rem;
-    border: 0.06125rem solid #000;
-    border-radius: 0.5rem;
+    width: 40px;
+    height: 40px;
+    padding: 8px;
+    background: white;
+    border-radius: 8px;
     cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+    &:hover {
+      transform: scale(1.1);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
   }
 }
 
+// Floating Modal Base Styles
 .floating {
-  position: absolute;
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100vw;
   height: 100vh;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-  .bgShadow {
-    height: inherit;
-    width: inherit;
-    background-color: #000000c0;
-    position: absolute;
+// Animations
+@keyframes slideUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  main {
+    padding: 2rem 1rem;
   }
 
-  .pane {
-    margin: auto;
-    max-width: max-content;
-    position: relative;
-    padding: 2rem;
-    background-color: #fff;
-    z-index: 1;
+  .container {
+    padding: 2rem 1.5rem;
+    border-radius: 16px;
+  }
 
-    .closePane {
-      position: absolute;
-      top: 0.5rem;
-      right: 0.5rem;
-      cursor: pointer;
-      user-select: none;
-      -webkit-user-select: none;
+  #urlInput {
+    > input[type="text"],
+    > input[type="submit"] {
+      padding: 0.875rem 1rem;
     }
+  }
+
+  #shortUrlContainer {
+    padding: 1rem;
+    flex-direction: column;
+    align-items: stretch;
+
+    > img {
+      align-self: center;
+    }
+  }
+
+  #my-dashboard > .pane,
+  #authScreen .authPane {
+    padding: 1.5rem;
+    width: 95%;
+  }
+}
+
+// Loading state
+.loading {
+  position: relative;
+  pointer-events: none;
+  opacity: 0.6;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid #667eea;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Success/Error Messages
+.message {
+  padding: 1rem 1.5rem;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  font-weight: 500;
+  animation: slideDown 0.3s ease;
+
+  &.success {
+    background: #d4edda;
+    color: #155724;
+    border-left: 4px solid #28a745;
+  }
+
+  &.error {
+    background: #f8d7da;
+    color: #721c24;
+    border-left: 4px solid #dc3545;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
   }
 }

@@ -1,60 +1,43 @@
 "use strict";
 
 const create = async (api, longUrl, alias = "") => {
-  let output;
-  await api.post(
+  const data = await api.post(
     "/api/links",
     alias != "" ? { longUrl: longUrl, alias: alias } : { longUrl: longUrl },
     { 400: "Invalid URL or alias taken", 401: "Unauthorized access" },
     async (response) => {
-      let data = await response.json();
-      output = { id: data.id, shortUrl: data.shortUrl };
-      console.log(data);
-      console.log(data.id);
-      console.log(data.shortUrl);
+      return await response.json();
     },
   );
-  return output;
+  return data;
 };
 
 const mine = async (api) => {
-  let output = [];
-  api.get(
+  const data = await api.get(
     "/api/links/mine",
     { 401: "Unauthorized access" },
     async (response) => {
-      let mylinks = await response.json();
-      mylinks.forEach((link) => {
-        output.push(link);
-        console.log(link);
-        console.log(link.id);
-        console.log(link.longUrl);
-        console.log(link.isActive);
-        console.log(link.hitCount);
-        if ("lastHitAt" in link) console.log(link.lastHitAt);
-        if ("createdAt" in link) console.log(link.createdAt);
-      });
+      return await response.json();
     },
     (status) => {
       throw new Error(status);
     },
   );
-  return output;
+  return data?.items ?? [];
 };
 
 const meta = async (api, id) => {
-  api.get(
+  return await api.get(
     `/api/links/${id}/meta`,
     { 401: "Unauthorized access", 403: "Not owner", 404: "Not found" },
     async (response) => {
-      let metadata = await response.json();
-      console.log(metadata);
+      return await response.json();
     },
   );
 };
 
 const toggle = async (api, id, isActive) => {
-  await api.patch(
+  return await api.patch(
     `/api/links/${id}`,
     { isActive: isActive },
     {

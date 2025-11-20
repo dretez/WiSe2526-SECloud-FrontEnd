@@ -7,11 +7,13 @@ class LinkComponent {
   #id;
   #isActive;
   #api;
+  #shortUrl;
 
   constructor(
     api,
     id,
     longUrl,
+    shortUrl,
     hitCount,
     lastHit,
     createdAt,
@@ -22,10 +24,15 @@ class LinkComponent {
     this.#id = id;
     this.#isActive = isActive;
     this.#displayToggled = toggled;
+     this.#shortUrl = shortUrl;
 
     this.element = document.createElement("li");
+    const shortUrlMarkup = shortUrl
+      ? `<div class="shortUrl">Short URL: <a href="${shortUrl}" target="_blank" rel="noopener noreferrer">${shortUrl}</a></div>`
+      : "";
     this.element.innerHTML = `
 <div class="longUrl">${longUrl}</div>
+${shortUrlMarkup}
 <div class="id">Id: ${id}</div>
 <div class="hitCount">Hit count: ${hitCount}</div>
 <div class="lastHitAt">Last hit: ${typeof lastHit == "undefined" ? "-" : lastHit}</div>
@@ -48,8 +55,9 @@ class LinkComponent {
 
   async commit() {
     const activeToggle = this.element.querySelector(
-      "input[name=activeLinkToggle",
+      "input[name=activeLinkToggle]",
     );
+    if (!activeToggle) return;
     if (activeToggle.checked === this.#isActive) return;
     try {
       await api_links.toggle(this.#api, this.#id, activeToggle.checked);
