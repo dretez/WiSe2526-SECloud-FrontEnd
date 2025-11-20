@@ -2,66 +2,186 @@
 @use "header";
 @use "auth";
 @use "dashboard";
+@use "animations";
 @use "colors" as color;
 
 body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  background: linear-gradient(135deg, color.$base 0%, color.$accent 100%);
+  color: #1a1a1a;
+  line-height: 1.6;
 }
 
 main {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
+
+  @media screen and (max-width: 768px) {
+    padding: 2rem 1rem;
+  }
+}
+
+a {
+  color: color.$base;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: color.$accent;
+  }
 }
 
 .container {
   display: flex;
   flex-direction: column;
   margin: auto;
-  gap: 1rem;
+  gap: 2rem;
   max-width: 50rem;
   width: 80vw;
+  background-color: white;
+  padding: 3rem;
+  border-radius: 1.25rem;
+  box-shadow: 0 1.25rem 3.75rem #0003;
+  animation: slideUp 0.5s ease;
+
+  @media screen and (max-width: 768px) {
+    padding: 2rem 1.5rem;
+    border-radius: 1rem;
+  }
 }
 
 .openDashboard,
 .openAuthScreen {
   cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 .hide {
-  display: none;
+  display: none !important;
 }
 
 #urlInput {
-  max-width: fit-content;
   margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  label {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+  }
+
+  input {
+    @media screen and (max-width: 768px) {
+      padding: 0.875rem 1rem;
+    }
+
+    &[type=text] {
+      padding: 1rem 1.25rem;
+      border: 0.125rem solid #e0e0e0;
+      border-radius: 0.75rem;
+      font-size: 1rem;
+      background-color: #fafafa;
+      transition: all 0.2s ease;
+
+      &:focus {
+        border-color: #667eea;
+        background-color: white;
+        box-shadow: 0 0 0 0.25rem rgba(color.$base, 0.125)
+      }
+
+      &::placeholder {
+        color: #999
+      }
+    }
+
+    &[type=submit] {
+      padding: 1rem 2rem;
+      background: linear-gradient(135deg, color.$base 0%, color.$accent 100%);
+      color: white;
+      border: none;
+      border-radius: 0.75rem;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 0.25rem 0.825rem rgba(color.$base, 0.4);
+
+      &:hover {
+        transform: translateY(-0.125rem);
+        box-shadow: 0 0.25rem 0.825rem rgba(color.$base, 0.5);
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+    }
+  }
 }
 
 #shortUrlContainer {
   display: flex;
-  max-width: 30rem;
-  width: 80%;
-  margin: auto;
-  padding: 0.5rem;
-  border: 0.125rem solid #000;
-  border-radius: 0.5rem;
-  color: #444;
+  padding: 1.25rem 1.5rem;
+  border: 0.125rem solid rgba(color.$base, 0.2);
+  border-radius: 0.75rem;
   gap: 1rem;
+  align-items: center;
+  background: linear-gradient(135deg, rgba(color.$base, 0.1) 0%, rgba(color.$accent, 0.1) 100%);
+  transition: all 0.2s ease;
+
+  &:hover {
+    border-color: rgba(color.$base, 0.4);
+    box-shadow: 0 0.25rem 0.75rem rgba(color.$base, 0.15);
+  }
+  
+  @media screen and (max-width: 768px) {
+    padding: 1rem;
+    flex-direction: column;
+    align-items: stretch;
+  }
 
   > span {
     flex-grow: 1;
     align-content: center;
     overflow: auto hidden;
     white-space: nowrap;
+    font-size: 1rem;
+    color: #333;
+    word-break: break-all;
+    font-weight: 500;
+
+    &.empty::before {
+      content: "Shortened URL will appear here...";
+      color: #999;
+      font-style: italic;
+    }
   }
 
   > img {
-    max-width: 2rem;
-    border: 0.06125rem solid #000;
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0.5rem;
     border-radius: 0.5rem;
+    background-color: white;
+    box-shadow: 0 0.125rem 0.5rem #0000001a;
     cursor: pointer;
+    transition: all 0.2s ease;
+
+    @media screen and (max-width: 768px) {
+      align-self: center;
+    }
+
+    &:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0.25rem 0.75rem #0000004d;
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
   }
 }
 
@@ -99,6 +219,11 @@ main {
 
     scrollbar-width: thin;
     scrollbar-color: color.$base #fff0;
+
+    @media screen and (max-width: 768px) {
+      padding: 1.5rem;
+      width: 95%;
+    }
 
     &::-webkit-scrollbar {
       width: 0.5rem;
@@ -142,5 +267,57 @@ main {
         transform: rotate(90deg);
       }
     }
+  }
+}
+
+h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 1.5rem;
+  display: block;
+  background: linear-gradient(135deg, color.$base 0%, color.$accent 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.loading {
+  position: relative;
+  pointer-events: none;
+  opacity: 0.6;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 1.25rem;
+    height: 1.25rem;
+    margin: -0.625rem 0 0 -0.625rem;
+    border: 0.125rem solid color.$base;
+    border-top: transparent;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+  }
+}
+
+.message {
+  padding: 1rem 1.5rem;
+  border-radius: 0.625rem;
+  margin-bottom: 1rem;
+  font-weight: 500;
+  animation: slideDown 0.3s ease;
+
+  &.success {
+    background-color: color.$success1;
+    color: color.$success2;
+    border-left: 0.25rem solid color.$success3;
+  }
+
+  &.error {
+    background-color: color.$error1;
+    color: color.$error2;
+    border-left: 0.25rem solid color.$error3;
   }
 }
