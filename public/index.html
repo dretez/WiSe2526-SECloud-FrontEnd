@@ -68,12 +68,25 @@
     <div id="my-dashboard" class="floating">
       <div class="bgShadow"></div>
       <div class="pane">
-        <span>My dashboard</span>
+        <h1>My dashboard</h1>
+        <div class="profileSection">
+          <img class="profileImage hide" alt="Profile picture" />
+          <div class="profileUpload">
+            <input
+              type="file"
+              name="profileImageInput"
+              accept="image/png,
+            image/jpeg, image/webp"
+            />
+            <label for="profileImageInput">Update Profile Picture</label>
+          </div>
+          <div class="profileImageStatus hide"></div>
+        </div>
         <ul class="link-list"></ul>
         <div>
           <button type="button" name="applyChanges">Apply Changes</button>
         </div>
-        <div class="closePane">X</div>
+        <div class="closePane" title="Close">✕</div>
       </div>
     </div>
 
