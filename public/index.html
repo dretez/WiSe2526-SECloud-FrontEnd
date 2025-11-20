@@ -52,16 +52,21 @@
         </div>
         <form id="loginForm">
           <div>
-            <label for="email">Email:</label>
-            <input type="email" name="email" />
+            <label for="email">Email</label>
+            <input type="email" name="email" placeholder="Enter your email" />
           </div>
           <div>
-            <label for="password">Password:</label>
-            <input type="password" name="password" />
+            <label for="password">Password</label>
+            <input
+              type="password"
+              name="password"
+              placeholder="Enter your password"
+            />
           </div>
-          <input type="submit" name="authenter" value="Enter" />
+          <input type="submit" name="authenter" value="Continue" />
         </form>
-        <div class="closePane">X</div>
+        <div class="authError hide"></div>
+        <div class="closePane" title="Close">✕</div>
       </div>
     </div>
 
