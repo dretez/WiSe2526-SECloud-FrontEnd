@@ -606,7 +606,7 @@ a:hover {
   word-break: break-all;
   font-weight: 500;
 }
-#shortUrlContainer > span.empty::before {
+#shortUrlContainer > span:empty::before {
   content: "Shortened URL will appear here...";
   color: #999;
   font-style: italic;

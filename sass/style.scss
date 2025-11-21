@@ -171,7 +171,7 @@ a {
     word-break: break-all;
     font-weight: 500;
 
-    &.empty::before {
+    &:empty::before {
       content: "Shortened URL will appear here...";
       color: #999;
       font-style: italic;
