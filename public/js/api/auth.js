@@ -4,9 +4,8 @@ import {
   startSession,
   endSession,
   updateProfileImage,
-  setAuthError,
 } from "../auth/session.js";
-import { hideAuthScreen } from "../auth/auth.js";
+import { hideAuthScreen, setAuthError } from "../auth/auth.js";
 import { setProfileStatus, updatePreview } from "../dashboard/dashboard.js";
 
 const register = (api, email, password) => {
