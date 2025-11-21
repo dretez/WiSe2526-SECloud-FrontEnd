@@ -1,8 +1,18 @@
 "use strict";
 
+import "./firebase.js";
+
 import API from "./api/api.js";
 
-const api = new API("our/api/here");
+const api = new API(
+  window.__API_BASE_URL__ ??
+    document
+      .querySelector("meta[name=api-base-url]")
+      ?.getAttribute("content")
+      ?.trim()
+      .replace(/\/$/, "") ??
+    window.location.origin,
+);
 
 import * as url from "./urlRequest.js";
 import * as auth from "./auth/auth.js";
