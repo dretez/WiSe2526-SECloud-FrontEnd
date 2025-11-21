@@ -1,7 +1,8 @@
 "use strict";
 
 import * as api_links from "../api/links.js";
-import { session } from "../auth/session.js";
+import * as api_auth from "../api/auth.js";
+import { getCurrentUser, isAuthenticated } from "../auth/session.js";
 
 import { LinkComponent } from "./linkComponent.js";
 
@@ -9,17 +10,38 @@ const openButtons = document.querySelectorAll(".openDashboard");
 const dashboard = document.querySelector("#my-dashboard");
 const listDisplay = dashboard.querySelector("ul.link-list");
 const applyChangesBtn = dashboard.querySelector("button[name=applyChanges]");
+const profileImageInput = dashboard.querySelector("input[name=profileImage]");
+const profileStatusDisplay = dashboard.querySelector(".profileImageStatus");
+const profilePreview = dashboard.querySelector(".profileImage");
 
 openButtons.forEach((e) =>
   e.addEventListener("click", () => {
-    if (!session) return;
+    if (!isAuthenticated()) return;
     dashboard.classList.add("display");
   }),
 );
 
 const testLinks = (api) => [
-  new LinkComponent(api, 123, "https://one.one.one.one/", 23, "-", "-", false),
-  new LinkComponent(api, 456, "https://www.google.com/", 157, "-", "-", true),
+  new LinkComponent(
+    api,
+    123,
+    "https://one.one.one.one/",
+    "https://short.example/123",
+    23,
+    "-",
+    "-",
+    false,
+  ),
+  new LinkComponent(
+    api,
+    456,
+    "https://www.google.com/",
+    "https://short.example/456",
+    157,
+    "-",
+    "-",
+    true,
+  ),
 ];
 
 class Dashboard {
@@ -33,10 +55,57 @@ class Dashboard {
 
     openButtons.forEach((e) =>
       e.addEventListener("click", () => {
-        if (!session) return;
+        if (!isAuthenticated()) return;
+        setProfileStatus("");
+        updatePreview();
         this.load();
       }),
     );
+
+    if (profileImageInput) {
+      profileImageInput.addEventListener("change", async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        if (file.size > 5 * 1024 * 1024) {
+          /// Validate file size (max: 5MB)
+          setProfileStatus("File too large. Maximum size is 5MB.");
+          e.target.value = "";
+          return;
+        }
+
+        const validTypes = [
+          "image/png",
+          "image/jpeg",
+          "image/jpg",
+          "image/webp",
+        ];
+        if (!validTypes.includes(file.type)) {
+          // Validate file type
+          setProfileStatus("Invalid file type. Please use PNG, JPEG, or WebP.");
+          e.target.value = "";
+          return;
+        }
+
+        // Show preview before upload
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          if (profilePreview) {
+            profilePreview.src = e.target.result;
+            profilePreview.classList.remove("hide");
+          }
+        };
+        reader.readAsDataURL(file);
+
+        setProfileStatus("Uploading... ⏳");
+        profileImageInput.disabled = true;
+        api_auth.uploadProfileImage(this.#api, file);
+        profileImageInput.disabled = false;
+        e.target.value = "";
+      });
+    }
+
+    updatePreview();
   }
 
   async load() {
@@ -51,6 +120,7 @@ class Dashboard {
           new LinkComponent(
             l.id,
             l.longUrl,
+            l.shortUrl,
             l.hitCount,
             l.lastHitAt,
             l.createdAt,
@@ -76,4 +146,30 @@ class Dashboard {
   }
 }
 
-export { Dashboard };
+function updatePreview() {
+  if (!profilePreview) return;
+  const user = getCurrentUser();
+  if (user?.profileImageUrl) {
+    profilePreview.src = user.profileImageUrl;
+    profilePreview.classList.remove("hide");
+  } else {
+    profilePreview.removeAttribute("src");
+    profilePreview.classList.add("hide");
+  }
+}
+
+function setProfileStatus(message, success) {
+  if (!profileStatusDisplay) return;
+  if (message) {
+    profileStatusDisplay.classList.remove("error");
+    profileStatusDisplay.classList.remove("success");
+    profileStatusDisplay.textContent = "";
+    if (typeof success === "boolean")
+      profileStatusDisplay.classList.add(success ? "success" : "error");
+  } else {
+    profileStatusDisplay.textContent = "";
+    profileStatusDisplay.classList.add("hide");
+  }
+}
+
+export { Dashboard, updatePreview, setProfileStatus };

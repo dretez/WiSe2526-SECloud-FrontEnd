@@ -12,6 +12,7 @@ class LinkComponent {
     api,
     id,
     longUrl,
+    shortUrl,
     hitCount,
     lastHit,
     createdAt,
@@ -26,6 +27,7 @@ class LinkComponent {
     this.element = document.createElement("li");
     this.element.innerHTML = `
 <div class="longUrl">${longUrl}</div>
+<div class="shortUrl"><a href="${shortUrl}" target="_blank" rel="noreferrer">${shortUrl}</a></div>
 <div class="id">Id: ${id}</div>
 <div class="hitCount">Hit count: ${hitCount}</div>
 <div class="lastHitAt">Last hit: ${typeof lastHit == "undefined" ? "-" : lastHit}</div>

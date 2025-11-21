@@ -70,6 +70,16 @@
         transition: all 0.2s ease;
         background: rgba(color.$base, 0.1);
         color: color.$base;
+
+        &.success {
+          background-color: rgba(color.$success3, 0.1);
+          color: color.$success3;
+        }
+
+        &.error {
+          background-color: rgba(color.$error3, 0.1);
+          color: color.$error3;
+        }
       }
     }
 
