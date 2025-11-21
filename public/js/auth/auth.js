@@ -5,6 +5,7 @@ import * as session from "./session.js";
 
 const authScreen = document.querySelector("#authScreen");
 const openButtons = document.querySelectorAll(".openAuthScreen");
+const authErrorDisplay = authScreen.querySelectorAll(".authError");
 const authEnterBtn = authScreen.querySelector("input[name=authenter]");
 const loginForm = authScreen.querySelector("#loginForm");
 const emailInput = loginForm.querySelector("input[name=email]");
@@ -35,11 +36,14 @@ Object.entries(authOpts).forEach(([key, val]) => {
 
 loginForm.addEventListener("submit", (e) => {
   e.preventDefault();
-  let email = emailInput.value;
+  setAuthError("");
+  authEnterBtn.disabled = true;
+  let email = emailInput.value.trim();
   let password = passwordInput.value;
 
   if (typeof api !== "undefined") {
     api_auth[selectedAuthOpt](api, email, password);
+    passwordInput.value = "";
   } else {
     console.error("Error: No API specified to be used for authentication");
   }
@@ -62,6 +66,17 @@ function setAuthOpt(opt) {
   });
 }
 
+function setAuthError(message) {
+  if (!authErrorDisplay) return;
+  if (message && message.length > 0) {
+    authErrorDisplay.textContent = message;
+    authErrorDisplay.classList.remove("hide");
+  } else {
+    authErrorDisplay.textContent = "";
+    authErrorDisplay.classList.add("hide");
+  }
+}
+
 /*=================================== API ===================================*/
 
 function setupAPICalls(apiObj) {
@@ -69,4 +84,4 @@ function setupAPICalls(apiObj) {
   session.setupAPICalls(apiObj);
 }
 
-export { setupAPICalls, hideAuthScreen, showAuthScreen };
+export { setupAPICalls, hideAuthScreen, showAuthScreen, setAuthError };
