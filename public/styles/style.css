@@ -571,6 +571,12 @@ a:hover {
   background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
   transition: all 0.2s ease;
 }
+#shortUrlContainer.success {
+  border-color: #28a745;
+}
+#shortUrlContainer.error {
+  border-color: #dc3545;
+}
 #shortUrlContainer:hover {
   border-color: rgba(102, 126, 234, 0.4);
   box-shadow: 0 0.25rem 0.75rem rgba(102, 126, 234, 0.15);
@@ -606,6 +612,9 @@ a:hover {
   box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.1019607843);
   cursor: pointer;
   transition: all 0.2s ease;
+}
+#shortUrlContainer > img.copyAvailable {
+  transform: scale(1.2);
 }
 @media screen and (max-width: 768px) {
   #shortUrlContainer > img {
