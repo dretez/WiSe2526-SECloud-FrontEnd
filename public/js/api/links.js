@@ -4,14 +4,11 @@ const create = async (api, longUrl, alias = "") => {
   let output;
   await api.post(
     "/api/links",
-    alias != "" ? { longUrl: longUrl, alias: alias } : { longUrl: longUrl },
+    alias !== "" ? { longUrl: longUrl, alias: alias } : { longUrl: longUrl },
     { 400: "Invalid URL or alias taken", 401: "Unauthorized access" },
     async (response) => {
       let data = await response.json();
       output = { id: data.id, shortUrl: data.shortUrl };
-      console.log(data);
-      console.log(data.id);
-      console.log(data.shortUrl);
     },
   );
   return output;
@@ -26,13 +23,6 @@ const mine = async (api) => {
       let mylinks = await response.json();
       mylinks.forEach((link) => {
         output.push(link);
-        console.log(link);
-        console.log(link.id);
-        console.log(link.longUrl);
-        console.log(link.isActive);
-        console.log(link.hitCount);
-        if ("lastHitAt" in link) console.log(link.lastHitAt);
-        if ("createdAt" in link) console.log(link.createdAt);
       });
     },
     (status) => {

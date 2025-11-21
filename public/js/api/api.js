@@ -52,6 +52,13 @@ class API {
       body: JSON.stringify(data),
     });
   }
+
+  async upload(path, formData, statusDict, responseHandler, errorHandler) {
+    await this.#request(path, statusDict, responseHandler, errorHandler, {
+      method: "POST",
+      body: formData,
+    });
+  }
 }
 
 export default API;
