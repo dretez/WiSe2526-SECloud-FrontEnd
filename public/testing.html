@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="api-base-url" content="http://localhost:8080" />
+    <title>API Testing Interface</title>
+    <link
+      href="/styles/style.css"
+      rel="stylesheet"
+      type="text/css"
+      media="all"
+    />
+    <style>
+      h1,
+      h2 {
+        color: #000;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: #000;
+        background-clip: text;
+      }
+      .test-container {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 1rem;
+      }
+      .test-section {
+        margin-bottom: 2rem;
+        padding: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 0.5rem;
+      }
+      .test-section h2 {
+        margin-top: 0;
+      }
+      .test-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin-bottom: 1rem;
+      }
+      .test-form input {
+        padding: 0.5rem;
+      }
+      .test-form button {
+        padding: 0.5rem 1rem;
+        cursor: pointer;
+      }
+      .test-results {
+        margin-top: 1rem;
+        padding: 1rem;
+        background: #f5f5f5;
+        border-radius: 0.5rem;
+        max-height: 400px;
+        overflow-y: auto;
+      }
+      .test-result {
+        padding: 0.5rem;
+        margin-bottom: 0.5rem;
+        border-radius: 0.25rem;
+        border-left: 4px solid #ccc;
+      }
+      .test-result.passed {
+        background: #d4edda;
+        border-color: #28a745;
+      }
+      .test-result.failed {
+        background: #f8d7da;
+        border-color: #dc3545;
+      }
+      .test-result h4 {
+        margin: 0 0 0.5rem 0;
+      }
+      .test-result pre {
+        margin: 0;
+        font-size: 0.9rem;
+        white-space: pre-wrap;
+      }
+      .status-indicator {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        margin-right: 0.5rem;
+      }
+      .status-indicator.ok {
+        background: #28a745;
+      }
+      .status-indicator.error {
+        background: #dc3545;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="navbar">
+        <div class="left">
+          <a href="/">← Back to Main</a>
+        </div>
+        <div class="center">
+          <h1>API Testing Interface</h1>
+        </div>
+        <div class="right"></div>
+      </div>
+    </header>
+    <main>
+      <div class="test-container">
+        <div class="test-section">
+          <h2>System Status</h2>
+          <button id="checkStatus">Check Status</button>
+          <div id="statusResults" class="test-results hide"></div>
+        </div>
+
+        <div class="test-section">
+          <h2>Authentication Tests</h2>
+          <form id="authTestForm" class="test-form">
+            <div>
+              <label for="testEmail">Email:</label>
+              <input type="email" id="testEmail" name="email" required />
+            </div>
+            <div>
+              <label for="testPassword">Password:</label>
+              <input
+                type="password"
+                id="testPassword"
+                name="password"
+                required
+              />
+            </div>
+            <div>
+              <button type="button" id="testRegister">Test Register</button>
+              <button type="button" id="testLogin">Test Login</button>
+            </div>
+          </form>
+          <div id="authTestResults" class="test-results hide"></div>
+        </div>
+
+        <div class="test-section">
+          <h2>Link Creation Test</h2>
+          <form id="linkTestForm" class="test-form">
+            <div>
+              <label for="linkTestEmail">Email:</label>
+              <input type="email" id="linkTestEmail" name="email" required />
+            </div>
+            <div>
+              <label for="linkTestPassword">Password:</label>
+              <input
+                type="password"
+                id="linkTestPassword"
+                name="password"
+                required
+              />
+            </div>
+            <div>
+              <button type="button" id="testLinkCreate">
+                Test Link Creation
+              </button>
+            </div>
+          </form>
+          <div id="linkTestResults" class="test-results hide"></div>
+        </div>
+
+        <div class="test-section">
+          <h2>System Summary</h2>
+          <button id="getSummary">Get Summary</button>
+          <div id="summaryResults" class="test-results hide"></div>
+        </div>
+      </div>
+    </main>
+    <script type="module">
+      const API_BASE =
+        document
+          .querySelector("meta[name=api-base-url]")
+          ?.getAttribute("content")
+          ?.trim()
+          ?.replace(/\/$/, "") ?? window.location.origin;
+
+      function displayResults(containerId, results) {
+        const container = document.getElementById(containerId);
+        container.classList.remove("hide");
+        container.innerHTML = "";
+
+        if (Array.isArray(results)) {
+          results.forEach((result) => {
+            const div = document.createElement("div");
+            div.className = `test-result ${result.passed ? "passed" : "failed"}`;
+            div.innerHTML = `
+              <h4>
+                <span class="status-indicator ${result.passed ? "ok" : "error"}"></span>
+                ${result.test}
+              </h4>
+              <p><strong>Status:</strong> ${result.passed ? "PASSED" : "FAILED"}</p>
+              ${result.message ? `<p><strong>Message:</strong> ${result.message}</p>` : ""}
+              ${result.data ? `<pre>${JSON.stringify(result.data, null, 2)}</pre>` : ""}
+              <small>${result.timestamp}</small>
+            `;
+            container.appendChild(div);
+          });
+        } else {
+          const div = document.createElement("div");
+          div.className = "test-result";
+          div.innerHTML = `<pre>${JSON.stringify(results, null, 2)}</pre>`;
+          container.appendChild(div);
+        }
+      }
+
+      document
+        .getElementById("checkStatus")
+        .addEventListener("click", async () => {
+          try {
+            const response = await fetch(`${API_BASE}/monitoring/status`);
+            const data = await response.json();
+            displayResults("statusResults", {
+              ok: data.ok,
+              checks: data.checks,
+              timestamp: data.timestamp,
+            });
+          } catch (error) {
+            displayResults("statusResults", {
+              ok: false,
+              error: error.message,
+            });
+          }
+        });
+
+      document
+        .getElementById("testRegister")
+        .addEventListener("click", async () => {
+          const email = document.getElementById("testEmail").value;
+          const password = document.getElementById("testPassword").value;
+          if (!email || !password) {
+            alert("Please enter email and password");
+            return;
+          }
+
+          try {
+            const response = await fetch(
+              `${API_BASE}/testing/test/auth/register`,
+              {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, password }),
+              },
+            );
+            const data = await response.json();
+            displayResults("authTestResults", data.results || []);
+          } catch (error) {
+            displayResults("authTestResults", [
+              {
+                test: "request",
+                passed: false,
+                message: error.message,
+                timestamp: new Date().toISOString(),
+              },
+            ]);
+          }
+        });
+
+      document
+        .getElementById("testLogin")
+        .addEventListener("click", async () => {
+          const email = document.getElementById("testEmail").value;
+          const password = document.getElementById("testPassword").value;
+          if (!email || !password) {
+            alert("Please enter email and password");
+            return;
+          }
+
+          try {
+            const response = await fetch(
+              `${API_BASE}/testing/test/auth/login`,
+              {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, password }),
+              },
+            );
+            const data = await response.json();
+            displayResults("authTestResults", data.results || []);
+          } catch (error) {
+            displayResults("authTestResults", [
+              {
+                test: "request",
+                passed: false,
+                message: error.message,
+                timestamp: new Date().toISOString(),
+              },
+            ]);
+          }
+        });
+
+      document
+        .getElementById("testLinkCreate")
+        .addEventListener("click", async () => {
+          const email = document.getElementById("linkTestEmail").value;
+          const password = document.getElementById("linkTestPassword").value;
+          if (!email || !password) {
+            alert("Please enter email and password");
+            return;
+          }
+
+          try {
+            const response = await fetch(
+              `${API_BASE}/testing/test/links/create`,
+              {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, password }),
+              },
+            );
+            const data = await response.json();
+            displayResults("linkTestResults", data.results || []);
+          } catch (error) {
+            displayResults("linkTestResults", [
+              {
+                test: "request",
+                passed: false,
+                message: error.message,
+                timestamp: new Date().toISOString(),
+              },
+            ]);
+          }
+        });
+
+      document
+        .getElementById("getSummary")
+        .addEventListener("click", async () => {
+          try {
+            const response = await fetch(`${API_BASE}/testing/test/summary`);
+            const data = await response.json();
+            displayResults("summaryResults", data.summary || data);
+          } catch (error) {
+            displayResults("summaryResults", {
+              error: error.message,
+            });
+          }
+        });
+    </script>
+  </body>
+</html>

@@ -59,6 +59,17 @@ header > .navbar {
     padding: 1rem;
   }
 }
+header > .navbar > .left > a {
+  color: #666;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+header > .navbar > .left > a:hover {
+  background-color: rgba(102, 126, 234, 0.1);
+  color: #667eea;
+}
 header > .navbar > .center {
   flex-grow: 1;
   justify-content: center;
