@@ -9,8 +9,8 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background: linear-gradient(135deg, color.$base 0%, color.$accent 100%);
-  color: #1a1a1a;
+  background: color.$background6;
+  color: color.$text1;
   line-height: 1.6;
 }
 
@@ -28,7 +28,7 @@ main {
     margin-bottom: 1rem;
 
     p {
-      color: #666;
+      color: color.$text3;
       font-size: 1.1rem;
     }
   }
@@ -50,7 +50,7 @@ a {
   gap: 2rem;
   max-width: 50rem;
   width: 80vw;
-  background-color: white;
+  background-color: color.$background5;
   padding: 3rem;
   border-radius: 1.25rem;
   box-shadow: 0 1.25rem 3.75rem #0003;
@@ -81,7 +81,7 @@ a {
   label {
     font-size: 1.1rem;
     font-weight: 600;
-    color: #333;
+    color: color.$text2;
   }
 
   input {
@@ -91,27 +91,27 @@ a {
 
     &[type=text] {
       padding: 1rem 1.25rem;
-      border: 0.125rem solid #e0e0e0;
+      border: 0.125rem solid color.$border2;
       border-radius: 0.75rem;
       font-size: 1rem;
-      background-color: #fafafa;
+      background-color: color.$background4;
       transition: all 0.2s ease;
 
       &:focus {
-        border-color: #667eea;
-        background-color: white;
+        border-color: color.$base;
+        background-color: color.$background5;
         box-shadow: 0 0 0 0.25rem rgba(color.$base, 0.125)
       }
 
       &::placeholder {
-        color: #999
+        color: color.$text-placeholder;
       }
     }
 
     &[type=submit] {
       padding: 1rem 2rem;
-      background: linear-gradient(135deg, color.$base 0%, color.$accent 100%);
-      color: white;
+      background: color.$background6;
+      color: color.$text4;
       border: none;
       border-radius: 0.75rem;
       font-weight: 600;
@@ -139,7 +139,8 @@ a {
   border-radius: 0.75rem;
   gap: 1rem;
   align-items: center;
-  background: linear-gradient(135deg, rgba(color.$base, 0.1) 0%, rgba(color.$accent, 0.1) 100%);
+  background: color.$background6, rgba(color.$background5, 0.95);
+  background-blend-mode: color;
   transition: all 0.2s ease;
 
   &.success {
@@ -167,13 +168,13 @@ a {
     overflow: auto hidden;
     white-space: nowrap;
     font-size: 1rem;
-    color: #333;
+    color: color.$text2;
     word-break: break-all;
     font-weight: 500;
 
     &:empty::before {
       content: "Shortened URL will appear here...";
-      color: #999;
+      color: color.$text-placeholder;
       font-style: italic;
     }
   }
@@ -183,7 +184,7 @@ a {
     height: 2.5rem;
     padding: 0.5rem;
     border-radius: 0.5rem;
-    background-color: white;
+    background-color: color.$background5;
     box-shadow: 0 0.125rem 0.5rem #0000001a;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -220,7 +221,7 @@ a {
   .bgShadow {
     height: inherit;
     width: inherit;
-    background-color: #000000c0;
+    background-color: rgba(black, 0.75);
     position: absolute;
     backdrop-filter: blur(0.25rem);
   }
@@ -233,14 +234,14 @@ a {
     overflow: auto;
     position: relative;
     padding: 2rem;
-    background-color: #fff;
+    background-color: color.$background5;
     z-index: 1;
     box-shadow: 0 1.25rem 3.75rem #0000004c;
     border-radius: 1.25rem;
     animation: slideUp 0.3s ease;
 
     scrollbar-width: thin;
-    scrollbar-color: color.$base #fff0;
+    scrollbar-color: color.$base rgba(color.$background5, 0);
 
     @media screen and (max-width: 768px) {
       padding: 1.5rem;
@@ -252,16 +253,16 @@ a {
     }
 
     &::-webkit-scrollbar-track {
-      background: #f1f1f1;
+      background: color.$background2;
       border-radius: 0.625rem;
     }
 
     &::-webkit-scrollbar-thumb {
-      background: linear-gradient(135deg, color.$base 0%, color.$accent 100%);
+      background: color.$background6;
       border-radius: 0.625rem;
 
       &:hover {
-        background: linear-gradient(135deg, color.$accent 0%, color.$base 100%);
+        background: color.$background7;
       }
     }
 
@@ -278,14 +279,14 @@ a {
       align-items: center;
       justify-content: center;
       border-radius: 50%;
-      background: #f5f5f5;
+      background: color.$background3;
       font-size: 1.3rem;
-      color: #666;
+      color: color.$text3;
       transition: all 0.2s ease;
       user-select: none;
 
       &:hover {
-        background: #e8e8e8;
+        background: color.$background1;
         transform: rotate(90deg);
       }
     }
@@ -302,9 +303,9 @@ h2 {
 }
 h1, h2, h3, h4 {
   font-weight: 700;
-  color: #1a1a1a;
+  color: color.$text1;
   display: block;
-  background: linear-gradient(135deg, color.$base 0%, color.$accent 100%);
+  background: color.$background6;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

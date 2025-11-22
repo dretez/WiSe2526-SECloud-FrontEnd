@@ -1,7 +1,7 @@
 @use "colors" as color;
 
 header {
-  background: #fffffff2;
+  background: rgba(color.$background5, 0.95);
   backdrop-filter: blur(0.625rem);
   box-shadow: 0 0.125rem 1.25rem  rgba(#000, .1);
 
@@ -18,7 +18,7 @@ header {
 
     > .left {
       > a {
-        color: #666;
+        color: color.$text3;
         padding: 0.5rem 1rem;
         border-radius: 0.5rem;
         transition: all 0.2s ease;
@@ -44,7 +44,7 @@ header {
         height: 2.5rem;
         border-radius: 50%;
         object-fit: cover;
-        border: 0.06125rem solid #000
+        border: 0.06125rem solid color.$border1
       }
     }
 
@@ -104,8 +104,8 @@ header {
   }
 
   .login {
-    background: linear-gradient(135deg, color.$base 0%, color.$accent 100%);
-    color: white;
+    background: color.$background6;
+    color: color.$text4;
     box-shadow: 0 0.25rem 0.9rem rgba(color.$base, 0.5);
 
     &:hover {
@@ -119,11 +119,11 @@ header {
   }
 
   .logout {
-    color: #666;
+    color: color.$text3;
 
     &:hover {
-      background-color: #e8e8e8;
-      color: #333;
+      background-color: color.$background1;
+      color: color.$text2;
     }
   }
 }

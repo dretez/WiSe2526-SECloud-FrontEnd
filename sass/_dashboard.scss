@@ -23,7 +23,7 @@
         height: 7.5rem;
         border-radius: 50%;
         object-fit: cover;
-        border: 0.25rem solid #000;
+        border: 0.25rem solid color.$border1;
         box-shadow: 0 0.5rem 1.5rem #0002;
         transition: transform 0.2s ease;
 
@@ -40,7 +40,7 @@
         padding: 0.75rem 1.5rem;
         border-radius: 0.625rem;
         background: linear-gradient(135deg, color.$base 0%, color.$accent 100%);
-        color: white;
+        color: color.$text4;
         font-weight: 600;
         box-shadow: 0 0.25rem 0.9375rem rgba(color.$base, 0.4);
         transition: all 0.2s ease;
@@ -98,10 +98,10 @@
         flex-direction: column;
         gap: 0.75rem;
         padding: 1.25rem;
-        border: 0.125rem solid #e8e8e8;
+        border: 0.125rem solid color.$background1;
         border-radius: 0.75rem;
         cursor: pointer;
-        background-color: white;
+        background-color: color.$background5;
         transition: all 0.2s ease;
         overflow: hidden;
         position: relative;
@@ -138,7 +138,7 @@
 
           > *:not(.longUrl,.shortUrl) {
             font-size: 0.9rem;
-            color: #666;
+            color: color.$text3;
             display: flex;
             align-items: center;
             gap: 0.5rem;
@@ -155,7 +155,7 @@
 
         > .longUrl {
           font-weight: 600;
-          color: #333;
+          color: color.$text2;
           font-size: 1rem;
           word-break: break-all;
         }
@@ -189,7 +189,7 @@
     button[name="applyChanges"] {
       padding: 0.875rem 2rem;
       background: linear-gradient(135deg, color.$base 0%, color.$accent 100%);
-      color: white;
+      color: color.$text4;
       border-radius: 0.625rem;
       font-weight: 600;
       font-size: 1rem;

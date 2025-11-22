@@ -43,7 +43,7 @@ select:forcus {
 }
 
 header {
-  background: rgba(255, 255, 255, 0.9490196078);
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(0.625rem);
   box-shadow: 0 0.125rem 1.25rem rgba(0, 0, 0, 0.1);
 }
@@ -595,7 +595,8 @@ a:hover {
   border-radius: 0.75rem;
   gap: 1rem;
   align-items: center;
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%), rgba(255, 255, 255, 0.95);
+  background-blend-mode: color;
   transition: all 0.2s ease;
 }
 #shortUrlContainer.success {
@@ -668,7 +669,7 @@ a:hover {
 .floating .bgShadow {
   height: inherit;
   width: inherit;
-  background-color: rgba(0, 0, 0, 0.7529411765);
+  background-color: rgba(0, 0, 0, 0.75);
   position: absolute;
   backdrop-filter: blur(0.25rem);
 }
@@ -680,7 +681,7 @@ a:hover {
   overflow: auto;
   position: relative;
   padding: 2rem;
-  background-color: #fff;
+  background-color: white;
   z-index: 1;
   box-shadow: 0 1.25rem 3.75rem rgba(0, 0, 0, 0.2980392157);
   border-radius: 1.25rem;
