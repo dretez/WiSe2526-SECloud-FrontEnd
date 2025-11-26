@@ -42,9 +42,19 @@ const login = (api, email, password) => {
 };
 
 const logout = (api) => {
-  api.post("/auth/logout", {}, {}, () => {
-    endSession();
-  });
+  api.post(
+    "/auth/logout",
+    {},
+    {},
+    () => {
+      endSession();
+    },
+    (error) => {
+      // Force logout on error too, in case session is already invalid
+      console.warn("Logout failed or session already expired:", error);
+      endSession();
+    }
+  );
 };
 
 const me = (api) => {

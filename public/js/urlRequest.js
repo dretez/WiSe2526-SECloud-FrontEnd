@@ -28,8 +28,8 @@ async function urlRequest() {
   console.log(api_output);
   shortUrlDefined = typeof api_output !== "undefined";
   shorturlDisplay.textContent = shortUrlDefined
-    ? api_output
-    : "Error: Could not create short URL, please try again.";
+    ? api_output.shortUrl
+    : "Error: Could not create short URL. Please try logging out and in again.";
   shortUrlContainer.classList.add(shortUrlDefined ? "success" : "error");
   if (shortUrlDefined) {
     shortUrlContainer.classList.remove("error");

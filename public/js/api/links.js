@@ -10,6 +10,9 @@ const create = async (api, longUrl, alias = "") => {
       let data = await response.json();
       output = { id: data.id, shortUrl: data.shortUrl };
     },
+    (status) => {
+      console.error("Failed to create link:", status);
+    }
   );
   return output;
 };
