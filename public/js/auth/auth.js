@@ -5,7 +5,7 @@ import * as session from "./session.js";
 
 const authScreen = document.querySelector("#authScreen");
 const openButtons = document.querySelectorAll(".openAuthScreen");
-const authErrorDisplay = authScreen.querySelectorAll(".authError");
+const authErrorDisplay = authScreen.querySelector(".authError");
 const authEnterBtn = authScreen.querySelector("input[name=authenter]");
 const loginForm = authScreen.querySelector("#loginForm");
 const emailInput = loginForm.querySelector("input[name=email]");
