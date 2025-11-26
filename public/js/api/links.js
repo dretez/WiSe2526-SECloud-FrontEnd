@@ -10,8 +10,18 @@ const create = async (api, longUrl, alias = "") => {
       let data = await response.json();
       output = { id: data.id, shortUrl: data.shortUrl };
     },
-    (status) => {
-      console.error("Failed to create link:", status);
+    async (status, error) => {
+       console.error("Failed to create link:", status);
+       let message = "Failed to create link";
+       if (error && error._response) {
+         try {
+            const errorData = await error._response.json();
+            if (errorData.error) message = errorData.error;
+         } catch (e) {
+            // ignore json parse error
+         }
+       }
+       output = { error: message };
     }
   );
   return output;

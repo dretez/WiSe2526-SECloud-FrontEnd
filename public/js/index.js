@@ -4,14 +4,25 @@ import "./firebase.js";
 
 import API from "./api/api.js";
 
+// Get the API URL from the meta tag
+let apiBaseUrl = document
+  .querySelector("meta[name=api-base-url]")
+  ?.getAttribute("content");
+
+// Check for placeholder or localhost to fallback to local backend
+if (
+  apiBaseUrl === "__API_BASE_URL__" ||
+  window.location.hostname === "localhost" ||
+  window.location.hostname === "127.0.0.1"
+) {
+  apiBaseUrl = "http://localhost:8080";
+  console.log("🔧 Development mode: Using local backend at " + apiBaseUrl);
+}
+
 const api = new API(
   window.__API_BASE_URL__ ??
-    document
-      .querySelector("meta[name=api-base-url]")
-      ?.getAttribute("content")
-      ?.trim()
-      .replace(/\/$/, "") ??
-    window.location.origin,
+  apiBaseUrl?.trim().replace(/\/$/, "") ??
+  window.location.origin,
 );
 
 import * as url from "./urlRequest.js";

@@ -19,6 +19,7 @@ class API {
             ? statusDict[response.status]
             : `Unexpected HTTP status: ${response.status}`,
           status: response.status,
+          _response: response // Attach the raw response so we can read the body
         };
       })
       .then(async (response) => {
@@ -26,8 +27,10 @@ class API {
       })
       .catch(async (error) => {
         console.error("Error: " + error.message);
-        if (typeof errorHandler !== "undefined")
-          await errorHandler(error.status);
+        if (typeof errorHandler !== "undefined") {
+           // Pass both status and the error object (which might contain the response)
+           await errorHandler(error.status, error); 
+        }
       });
   }
 

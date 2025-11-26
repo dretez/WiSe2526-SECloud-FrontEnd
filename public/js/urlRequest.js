@@ -26,10 +26,18 @@ async function urlRequest() {
 
   let api_output = await api_links.create(api, url);
   console.log(api_output);
-  shortUrlDefined = typeof api_output !== "undefined";
-  shorturlDisplay.textContent = shortUrlDefined
-    ? api_output.shortUrl
-    : "Error: Could not create short URL. Please try logging out and in again.";
+  
+  if (api_output && api_output.shortUrl) {
+    shortUrlDefined = true;
+    shorturlDisplay.textContent = api_output.shortUrl;
+  } else {
+    shortUrlDefined = false;
+    // Use the specific error message from backend if available
+    shorturlDisplay.textContent = api_output && api_output.error 
+      ? `Error: ${api_output.error}`
+      : "Error: Could not create short URL. Please try logging out and in again.";
+  }
+
   shortUrlContainer.classList.add(shortUrlDefined ? "success" : "error");
   if (shortUrlDefined) {
     shortUrlContainer.classList.remove("error");

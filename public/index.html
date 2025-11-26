@@ -1,116 +1,95 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="api-base-url"
-      content="https://simple-url-shortener-backend-205344961105.europe-west4.run.app"
-    />
-    <title>URL Shortener - Shorten Your Links Instantly</title>
-    <link
-      href="/styles/style.css?v=1.0"
-      rel="stylesheet"
-      type="text/css"
-      media="all"
-    />
-  </head>
-  <body>
-    <header>
-      <div class="navbar">
-        <div class="left">
-          <div class="openDashboard">Dashboard</div>
-          <a href="/testing.html">Testing</a>
-        </div>
-        <div class="center"></div>
-        <div class="right">
-          <img class="profileImage hide" alt="Profile picture" />
-          <div class="login openAuthScreen">Login</div>
-          <div class="logout hide">Logout</div>
-        </div>
-      </div>
-    </header>
-    <main>
-      <div class="container">
-        <div class="title">
-          <h1>🔗 URL Shortener</h1>
-          <p>Shorten your long URLs instantly</p>
-        </div>
-        <div>
-          <form id="urlInput">
-            <label for="url">Enter your URL:</label>
-            <input
-              type="text"
-              name="url"
-              placeholder="https://example.com/very/long/url"
-            />
-            <input type="submit" name="urlsubmit" value="Shorten URL" />
-          </form>
-        </div>
-        <div id="shortUrlContainer">
-          <span class="shortUrl"></span>
-          <img
-            src="/assets/copy.svg"
-            alt="Copy short url"
-            title="Copy short url"
-          />
-        </div>
-      </div>
-    </main>
-    <footer></footer>
 
-    <div id="authScreen" class="floating">
-      <div class="bgShadow"></div>
-      <div class="authPane pane">
-        <div class="authMethodSelector">
-          <div class="authRegister">✨ Register</div>
-          <div class="authLogin">🔐 Login</div>
-        </div>
-        <form id="loginForm">
-          <div>
-            <label for="email">Email</label>
-            <input type="email" name="email" placeholder="Enter your email" />
-          </div>
-          <div>
-            <label for="password">Password</label>
-            <input
-              type="password"
-              name="password"
-              placeholder="Enter your password"
-            />
-          </div>
-          <input type="submit" name="authenter" value="Continue" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="api-base-url" content="__API_BASE_URL__" />
+  <title>URL Shortener - Shorten Your Links Instantly</title>
+  <link href="/styles/style.css?v=1.0" rel="stylesheet" type="text/css" media="all" />
+</head>
+
+<body>
+  <header>
+    <div class="navbar">
+      <div class="left">
+        <div class="openDashboard">Dashboard</div>
+        <a href="/testing.html">Testing</a>
+      </div>
+      <div class="center"></div>
+      <div class="right">
+        <img class="profileImage hide" alt="Profile picture" />
+        <div class="login openAuthScreen">Login</div>
+        <div class="logout hide">Logout</div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="container">
+      <div class="title">
+        <h1>🔗 URL Shortener</h1>
+        <p>Shorten your long URLs instantly</p>
+      </div>
+      <div>
+        <form id="urlInput">
+          <label for="url">Enter your URL:</label>
+          <input type="text" name="url" placeholder="https://example.com/very/long/url" />
+          <input type="submit" name="urlsubmit" value="Shorten URL" />
         </form>
-        <div class="authError hide"></div>
-        <div class="closePane" title="Close">✕</div>
+      </div>
+      <div id="shortUrlContainer">
+        <span class="shortUrl"></span>
+        <img src="/assets/copy.svg" alt="Copy short url" title="Copy short url" />
       </div>
     </div>
+  </main>
+  <footer></footer>
 
-    <div id="my-dashboard" class="floating">
-      <div class="bgShadow"></div>
-      <div class="pane">
-        <h2>My Dashboard</h2>
-        <div class="profileSection">
-          <img class="profileImage hide" alt="Profile picture" />
-          <div class="profileUpload">
-            <input
-              type="file"
-              name="profileImageInput"
-              accept="image/png,
-            image/jpeg, image/webp"
-            />
-            <label for="profileImageInput">Update Profile Picture</label>
-          </div>
-          <div class="profileImageStatus hide"></div>
-        </div>
-        <ul class="link-list"></ul>
+  <div id="authScreen" class="floating">
+    <div class="bgShadow"></div>
+    <div class="authPane pane">
+      <div class="authMethodSelector">
+        <div class="authRegister">✨ Register</div>
+        <div class="authLogin">🔐 Login</div>
+      </div>
+      <form id="loginForm">
         <div>
-          <button type="button" name="applyChanges">Apply Changes</button>
+          <label for="email">Email</label>
+          <input type="email" name="email" placeholder="Enter your email" />
         </div>
-        <div class="closePane" title="Close">✕</div>
-      </div>
+        <div>
+          <label for="password">Password</label>
+          <input type="password" name="password" placeholder="Enter your password" />
+        </div>
+        <input type="submit" name="authenter" value="Continue" />
+      </form>
+      <div class="authError hide"></div>
+      <div class="closePane" title="Close">✕</div>
     </div>
+  </div>
 
-    <script type="module" src="/js/index.js"></script>
-  </body>
+  <div id="my-dashboard" class="floating">
+    <div class="bgShadow"></div>
+    <div class="pane">
+      <h2>My Dashboard</h2>
+      <div class="profileSection">
+        <img class="profileImage hide" alt="Profile picture" />
+        <div class="profileUpload">
+          <input type="file" name="profileImageInput" accept="image/png,
+            image/jpeg, image/webp" />
+          <label for="profileImageInput">Update Profile Picture</label>
+        </div>
+        <div class="profileImageStatus hide"></div>
+      </div>
+      <ul class="link-list"></ul>
+      <div>
+        <button type="button" name="applyChanges">Apply Changes</button>
+      </div>
+      <div class="closePane" title="Close">✕</div>
+    </div>
+  </div>
+
+  <script type="module" src="/js/index.js"></script>
+</body>
+
 </html>

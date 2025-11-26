@@ -35,7 +35,7 @@ const login = (api, email, password) => {
       hideAuthScreen();
     },
     (err) => {
-      errorDetails = err.status === 401 ? ": Invalid credentials" : "";
+      const errorDetails = err.status === 401 ? ": Invalid credentials" : "";
       setAuthError(`Login Failed${errorDetails}`);
     },
   );
