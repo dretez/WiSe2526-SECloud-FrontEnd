@@ -29,17 +29,11 @@ const create = async (api, longUrl, alias = "") => {
 
 const mine = async (api) => {
   let output = [];
-  api.get(
+  await api.get(
     "/api/links/mine",
     { 401: "Unauthorized access" },
     async (response) => {
-      let mylinks = await response.json();
-      mylinks.forEach((link) => {
-        output.push(link);
-      });
-    },
-    (status) => {
-      throw new Error(status);
+      output = (await response.json()).items;
     },
   );
   return output;

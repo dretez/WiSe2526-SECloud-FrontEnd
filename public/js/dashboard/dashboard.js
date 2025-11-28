@@ -21,29 +21,6 @@ openButtons.forEach((e) =>
   }),
 );
 
-const testLinks = (api) => [
-  new LinkComponent(
-    api,
-    123,
-    "https://one.one.one.one/",
-    "https://short.example/123",
-    23,
-    "-",
-    "-",
-    false,
-  ),
-  new LinkComponent(
-    api,
-    456,
-    "https://www.google.com/",
-    "https://short.example/456",
-    157,
-    "-",
-    "-",
-    true,
-  ),
-];
-
 class Dashboard {
   #api;
   #links;
@@ -112,31 +89,21 @@ class Dashboard {
     this.#links.forEach((l) => {
       if (typeof l.element !== "undefined") l.element.remove();
     });
-    let linklist;
-    try {
-      linklist = api_links.mine(this.#api);
-      this.#links = linklist.map(
-        (l) =>
-          new LinkComponent(
-            l.id,
-            l.longUrl,
-            l.shortUrl,
-            l.hitCount,
-            l.lastHitAt,
-            l.createdAt,
-            l.isActive,
-          ),
-      );
-      this.#links.forEach((e) => {
-        listDisplay.appendChild(e.element);
-      });
-    } catch (status) {
-      this.#links = testLinks(this.#api);
-      this.#links.forEach((e) => {
-        listDisplay.appendChild(e.element);
-      });
-      // warn user about failure
-    }
+    this.#links = (await api_links.mine(this.#api)).map(
+      (l) =>
+        new LinkComponent(
+          l.id,
+          l.longUrl,
+          l.shortUrl,
+          l.hitCount,
+          l.lastHitAt,
+          l.createdAt,
+          l.isActive,
+        ),
+    );
+    this.#links.forEach((e) => {
+      listDisplay.appendChild(e.element);
+    });
   }
 
   async commit() {
