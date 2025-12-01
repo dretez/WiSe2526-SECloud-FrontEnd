@@ -36,9 +36,9 @@ button {
   background: none;
 }
 
-input:forcus,
-textarea:forcus,
-select:forcus {
+input:focus,
+textarea:focus,
+select:focus {
   outline: none;
 }
 
@@ -789,5 +789,261 @@ h1, h2, h3, h4 {
   color: #721c24;
   border-left: 0.25rem solid #dc3545;
 }
+
+/* ---------- AI Analysis Button im Link-Item ---------- */
+
+.link-list li .actions {
+  margin-top: 0.75rem;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.ai-analysis-button {
+  border: none;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  background: linear-gradient(90deg, #7b5cff, #9b5cff);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  box-shadow: 0 8px 20px rgba(123, 92, 255, 0.35);
+  transition: transform 0.12s ease, box-shadow 0.12s ease, opacity 0.12s ease;
+}
+
+.ai-analysis-button::before {
+  content: "📊";
+  font-size: 1rem;
+}
+
+.ai-analysis-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px rgba(123, 92, 255, 0.5);
+}
+
+.ai-analysis-button:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 10px rgba(123, 92, 255, 0.3);
+  opacity: 0.9;
+}
+
+/* ---------- AI Analysis Card im Dashboard ---------- */
+
+.ai-analysis {
+  margin-top: 2rem;
+  padding: 1.25rem 1.5rem;
+  background: #ffffff;
+  border-radius: 1.25rem;
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.12);
+}
+
+.ai-analysis.hide {
+  display: none;
+}
+
+.ai-analysis h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.1rem;
+}
+
+.ai-analysis-meta {
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin-bottom: 0.75rem;
+}
+
+.ai-analysis-text {
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+}
+
+/* ---------- Mini-Diagramm-Layout ---------- */
+
+.ai-analysis-charts {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.75rem;
+}
+
+@media (min-width: 900px) {
+  .ai-analysis-charts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.mini-chart-card {
+  border-radius: 0.9rem;
+  padding: 0.75rem 0.9rem;
+  background: radial-gradient(circle at top left, #eef2ff, #f9fafb);
+}
+
+.mini-chart-card h4 {
+  margin: 0 0 0.5rem;
+  font-size: 0.9rem;
+  color: #4b5563;
+}
+
+.mini-chart-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.mini-chart-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.mini-chart-label {
+  flex: 0 0 70px;
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+
+.mini-chart-bar-wrapper {
+  position: relative;
+  flex: 1;
+  height: 0.5rem;
+  border-radius: 999px;
+  background: #e5e7eb;
+  overflow: visible;
+}
+
+.mini-chart-bar {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #6366f1, #a855f7);
+}
+
+.mini-chart-value {
+  position: absolute;
+  right: 0;
+  top: 0.7rem;          /* knapp unter dem Balken */
+  font-size: 0.75rem;
+  color: #111827;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 0 0.35rem;
+  border-radius: 999px;
+}
+
+.qr-section {
+  margin-top: 1.5rem;
+  padding: 1.25rem 1.5rem;
+  background: #ffffff;
+  border-radius: 1.25rem;
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.12);
+}
+
+.qr-meta {
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin-bottom: 0.75rem;
+  word-break: break-all;
+}
+
+.qr-image-wrapper {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0.75rem 0;
+}
+
+.qr-image {
+  width: 200px;
+  height: 200px;
+  border-radius: 0.75rem;
+  border: 1px solid #e5e7eb;
+  background: white;
+}
+
+.qr-hint {
+  font-size: 0.8rem;
+  color: #9ca3af;
+  margin-top: 0.5rem;
+}
+
+/* ---------- Actions im Link-Item: Buttons anordnen ---------- */
+
+.link-list li .actions {
+  margin-top: 0.75rem;
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+/* ---------- QR-Code Button ---------- */
+
+.qr-button {
+  border: none;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  background: linear-gradient(90deg, #14b8a6, #0ea5e9);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  box-shadow: 0 8px 20px rgba(14, 165, 233, 0.35);
+  transition: transform 0.12s ease, box-shadow 0.12s ease, opacity 0.12s ease;
+}
+
+.qr-button::before {
+  content: "▣";
+  font-size: 0.9rem;
+}
+
+.qr-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px rgba(14, 165, 233, 0.5);
+}
+
+.qr-button:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 10px rgba(14, 165, 233, 0.3);
+  opacity: 0.9;
+}
+
+/* ---------- Delete Button (Danger) ---------- */
+
+.delete-button {
+  border: 1px solid rgba(248, 113, 113, 0.8);
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  background: rgba(248, 113, 113, 0.05);
+  color: #b91c1c;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: background 0.12s ease, color 0.12s ease, transform 0.12s ease,
+  box-shadow 0.12s ease;
+}
+
+.delete-button::before {
+  content: "🗑️";
+  font-size: 0.9rem;
+}
+
+.delete-button:hover {
+  background: rgba(248, 113, 113, 0.18);
+  color: #7f1d1d;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(248, 113, 113, 0.35);
+}
+
+.delete-button:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 10px rgba(248, 113, 113, 0.25);
+}
+
+
 
 /*# sourceMappingURL=style.css.map */

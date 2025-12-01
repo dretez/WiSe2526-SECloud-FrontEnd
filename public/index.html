@@ -82,6 +82,23 @@
         <div class="profileImageStatus hide"></div>
       </div>
       <ul class="link-list"></ul>
+      <section class="ai-analysis hide">
+        <h3>AI Analysis</h3>
+        <p class="ai-analysis-meta"></p>
+        <!-- Text lieber als <p>, nicht <pre> -->
+        <p class="ai-analysis-text"></p>
+
+        <!-- Hier kommen die Mini-Diagramme rein -->
+        <div class="ai-analysis-charts"></div>
+      </section>
+      <section class="qr-section hide">
+        <h3>QR Codes</h3>
+        <p class="qr-meta"></p>
+        <div class="qr-image-wrapper"></div>
+        <p class="qr-hint">
+          Rechtsklick → Bild speichern oder in ein Plakat/Flyer einfügen.
+        </p>
+      </section>
       <div>
         <button type="button" name="applyChanges">Apply Changes</button>
       </div>
@@ -89,6 +106,7 @@
     </div>
   </div>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <script type="module" src="/js/index.js"></script>
 </body>
 
