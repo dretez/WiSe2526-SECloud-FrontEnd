@@ -5,7 +5,7 @@ import {
   endSession,
   updateProfileImage,
 } from "../auth/session.js";
-import { hideAuthScreen, setAuthError } from "../auth/auth.js";
+import { hideAuthScreen, setAuthError, enableAuth } from "../auth/auth.js";
 import { setProfileStatus, updatePreview } from "../dashboard/dashboard.js";
 
 const register = (api, email, password) => {
@@ -17,9 +17,11 @@ const register = (api, email, password) => {
       let data = await response.json();
       startSession(data);
       hideAuthScreen();
+      enableAuth();
     },
     () => {
       setAuthError("Registration failed");
+      enableAuth();
     },
   );
 };
@@ -33,10 +35,12 @@ const login = (api, email, password) => {
       let data = await response.json();
       startSession(data);
       hideAuthScreen();
+      enableAuth();
     },
     (err) => {
       const errorDetails = err.status === 401 ? ": Invalid credentials" : "";
       setAuthError(`Login Failed${errorDetails}`);
+      enableAuth();
     },
   );
 };
@@ -53,7 +57,7 @@ const logout = (api) => {
       // Force logout on error too, in case session is already invalid
       console.warn("Logout failed or session already expired:", error);
       endSession();
-    }
+    },
   );
 };
 

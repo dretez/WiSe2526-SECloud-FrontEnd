@@ -37,7 +37,7 @@ Object.entries(authOpts).forEach(([key, val]) => {
 loginForm.addEventListener("submit", (e) => {
   e.preventDefault();
   setAuthError("");
-  authEnterBtn.disabled = true;
+  disableAuth();
   let email = emailInput.value.trim();
   let password = passwordInput.value;
 
@@ -57,6 +57,14 @@ function showAuthScreen() {
 
 function hideAuthScreen() {
   authScreen.classList.remove("display");
+}
+
+function disableAuth() {
+  authEnterBtn.disabled = true;
+}
+
+function enableAuth() {
+  authEnterBtn.disabled = false;
 }
 
 function setAuthOpt(opt) {
@@ -84,4 +92,11 @@ function setupAPICalls(apiObj) {
   session.setupAPICalls(apiObj);
 }
 
-export { setupAPICalls, hideAuthScreen, showAuthScreen, setAuthError };
+export {
+  setupAPICalls,
+  hideAuthScreen,
+  showAuthScreen,
+  setAuthError,
+  enableAuth,
+  disableAuth,
+};
